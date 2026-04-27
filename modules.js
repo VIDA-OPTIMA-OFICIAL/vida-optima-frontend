@@ -19,6 +19,18 @@
 
 const Modules = {
 
+  showPrivacyPolicy() {
+    alert(`POLÍTICA DE PRIVACIDAD INTERNACIONAL - VIDA ÓPTIMA\n\n` +
+      `1. DATOS QUE RECOPILAMOS: Información biométrica (peso, edad, sexo) y de estilo de vida para personalizar su plan.\n\n` +
+      `2. FINALIDAD: Mejora del bienestar y educación nutricional.\n\n` +
+      `3. SUS DERECHOS (GDPR/CCPA):\n` +
+      `   - Derecho al Acceso: Puede ver sus datos en el perfil.\n` +
+      `   - Derecho al Olvido: Puede eliminar su cuenta permanentemente desde el perfil.\n` +
+      `   - Portabilidad: Sus datos están sincronizados en Google Cloud.\n\n` +
+      `4. SEGURIDAD: Usamos Firebase (Google Cloud) con cifrado SSL de extremo a extremo.\n\n` +
+      `5. COOKIES: Usamos almacenamiento local para mantener su sesión activa.`);
+  },
+
   renderAuth() {
     return `
       <div class="module" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center;">
@@ -202,6 +214,9 @@ const Modules = {
           <div style="margin-top: 40px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; display: flex; flex-direction: column; gap: 12px; align-items: center;">
             <button style="font-size: 11px; opacity: 0.5; border: none; background: transparent; color: var(--text3); cursor: pointer;" onclick="logout()">
               🚪 CERRAR SESIÓN SEGURA
+            </button>
+            <button style="font-size: 10px; opacity: 0.3; border: none; background: transparent; color: var(--text3); cursor: pointer; text-decoration: underline;" onclick="Modules.showPrivacyPolicy()">
+              Ver Política de Privacidad Internacional
             </button>
             <button style="font-size: 10px; opacity: 0.3; border: none; background: transparent; color: var(--red); cursor: pointer; text-decoration: underline;" onclick="deleteAccount()">
               Eliminar mi cuenta y mis datos permanentemente
