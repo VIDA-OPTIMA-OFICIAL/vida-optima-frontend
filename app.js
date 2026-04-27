@@ -1,22 +1,22 @@
-/**
+﻿/**
  * ============================================================
- * VIDA ÓPTIMA — Plataforma de Bienestar Integral (app.js)
+ * VIDA Ã“PTIMA â€” Plataforma de Bienestar Integral (app.js)
  * ============================================================
  * @author      Terry Edicson Romero Loreto (Founder & CEO)
  * @id          20.264.887
- * @copyright   © 2025 Terry Edicson Romero Loreto. Todos los derechos reservados.
+ * @copyright   Â© 2025 Terry Edicson Romero Loreto. Todos los derechos reservados.
  * @version     2.1.0
- * @license     Propiedad Intelectual Protegida — Prohibida su 
- *              reproducción total o parcial sin autorización.
+ * @license     Propiedad Intelectual Protegida â€” Prohibida su 
+ *              reproducciÃ³n total o parcial sin autorizaciÃ³n.
  * ------------------------------------------------------------
- * Este software y su arquitectura lógica son propiedad 
+ * Este software y su arquitectura lÃ³gica son propiedad 
  * exclusiva del autor bajo leyes internacionales de IP.
  * ============================================================
  */
 
-// ═══════════════════════════════════════════
-// VIDA ÓPTIMA — Control de Interfaz
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// VIDA Ã“PTIMA â€” Control de Interfaz
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 let userData = {
   streak: 0,
   coins: 0,
@@ -31,27 +31,27 @@ let userData = {
   trialStartDate: new Date().toISOString()
 };
 
-// Configuración del Backend
+// ConfiguraciÃ³n del Backend
 const BACKEND_URL = "https://vida-optima-backend-production.up.railway.app"; 
 
-// ── Firebase Auth Observer ────────────────
+// â”€â”€ Firebase Auth Observer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log("👤 Usuario logueado:", user.email);
+    console.log("ðŸ‘¤ Usuario logueado:", user.email);
     // Cargar datos desde Firestore
     db.collection("users").doc(user.uid).get().then(doc => {
       if (doc.exists) {
         userData = { ...userData, ...doc.data() };
-        console.log("📦 Datos sincronizados desde la nube");
+        console.log("ðŸ“¦ Datos sincronizados desde la nube");
         // Si estamos en login, ir al dashboard
         if (window.currentModule === 'auth') showModule('perfil');
       } else {
-        console.log("🆕 Usuario nuevo, creando registro...");
+        console.log("ðŸ†• Usuario nuevo, creando registro...");
         db.collection("users").doc(user.uid).set(userData);
       }
     });
   } else {
-    console.log("🚫 Usuario no logueado");
+    console.log("ðŸš« Usuario no logueado");
   }
 });
 
@@ -75,7 +75,7 @@ function handleAuth(type) {
   } else {
     auth.signInWithEmailAndPassword(email, pass)
       .catch(err => {
-        errorEl.textContent = "Correo o contraseña incorrectos.";
+        errorEl.textContent = "Correo o contraseÃ±a incorrectos.";
         errorEl.style.display = 'block';
       });
   }
@@ -87,9 +87,9 @@ function logout() {
   });
 }
 
-// ── Navegación Onboarding y Legal ──────────
+// â”€â”€ NavegaciÃ³n Onboarding y Legal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function startOnboarding() {
-  // Primero forzar aceptación legal
+  // Primero forzar aceptaciÃ³n legal
   document.getElementById('legalModal').style.display = 'flex';
 }
 
@@ -142,7 +142,7 @@ function updateEnfoques() {
   // Extra para futuro
 }
 
-// ── Sincronización Maestra (Local + Nube) ──
+// â”€â”€ SincronizaciÃ³n Maestra (Local + Nube) â”€â”€
 function syncUserData() {
   // Guardar Local
   syncUserData();
@@ -152,22 +152,22 @@ function syncUserData() {
   if (user) {
     db.collection("users").doc(user.uid).set(userData, { merge: true })
       .then(() => {
-        console.log("☁️ Sincronización en la nube exitosa");
+        console.log("â˜ï¸ SincronizaciÃ³n en la nube exitosa");
         userData.isSynced = true;
       })
-      .catch(e => console.error("❌ Error al sincronizar con Firestore:", e));
+      .catch(e => console.error("âŒ Error al sincronizar con Firestore:", e));
   }
 }
 
-// ── Recolección de Datos ──────────────────
+// â”€â”€ RecolecciÃ³n de Datos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function collectData() {
   const enfoques = [];
   document.querySelectorAll('.focus-item.selected').forEach(el => {
     const text = el.textContent.trim().toLowerCase().split(' ')[1] || el.textContent.trim().toLowerCase().substring(2);
     // Limpieza simple
     let val = text;
-    if(val.includes('energía')) val = 'energia';
-    if(val.includes('sueño')) val = 'sueno';
+    if(val.includes('energÃ­a')) val = 'energia';
+    if(val.includes('sueÃ±o')) val = 'sueno';
     if(val.includes('salud')) val = 'salud';
     if(val.includes('rendimiento')) val = 'rendimiento';
     enfoques.push(val);
@@ -218,17 +218,17 @@ function renderSummary() {
   const sum = document.getElementById('summaryCard');
   sum.innerHTML = `
     <p><strong>Hola ${userData.nombre}</strong></p>
-    <p>Hemos analizado tu perfil (${userData.edad} años, ${userData.peso}kg) y hemos adaptado tu ruta considerando tus requerimientos para <strong>${userData.objetivos.map(o => o.replace('_', ' ')).join(', ')}</strong>.</p>
-    <p style="margin-top:10px;">Tu menú se ha optimizado para un presupuesto de $${userData.presupuesto} y tus rutinas para ${userData.tiempoEjercicio} minutos diarios.</p>
+    <p>Hemos analizado tu perfil (${userData.edad} aÃ±os, ${userData.peso}kg) y hemos adaptado tu ruta considerando tus requerimientos para <strong>${userData.objetivos.map(o => o.replace('_', ' ')).join(', ')}</strong>.</p>
+    <p style="margin-top:10px;">Tu menÃº se ha optimizado para un presupuesto de $${userData.presupuesto} y tus rutinas para ${userData.tiempoEjercicio} minutos diarios.</p>
     <div style="margin-top: 20px; padding: 15px; background: rgba(var(--green-rgb), 0.1); border-radius: 8px; border-left: 4px solid var(--green); text-align: left;">
       <p style="margin: 0; font-size: 14px; line-height: 1.4; color: var(--text);">
-        📌 <strong>Dato clave:</strong> Al entrar, ve directamente al <strong>panel lateral</strong> (botón ☰ arriba a la derecha) para ver tus <strong>instrucciones para vivir 100 años</strong>.
+        ðŸ“Œ <strong>Dato clave:</strong> Al entrar, ve directamente al <strong>panel lateral</strong> (botÃ³n â˜° arriba a la derecha) para ver tus <strong>instrucciones para vivir 100 aÃ±os</strong>.
       </p>
     </div>
   `;
 }
 
-// ── Ir al Dashboard ───────────────────────
+// â”€â”€ Ir al Dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function generatePlan(isNew = false) {
   document.getElementById('onboarding').classList.add('hidden');
   document.getElementById('dashboard').classList.remove('hidden');
@@ -238,7 +238,7 @@ function generatePlan(isNew = false) {
     Objetivo: ${userData.objetivos.map(o => o.replace('_', ' ')).join(', ')}
   `;
 
-  // Inicializar estados de navegación
+  // Inicializar estados de navegaciÃ³n
   window.currentMenuType = (userData.ingreso >= 600) ? 'default_premium' : 'default_q1';
   window.currentExerciseType = 'casa';
 
@@ -248,14 +248,14 @@ function generatePlan(isNew = false) {
     openWelcomeModal();
   }
 
-  // Sincronizar con Backend para obtener cálculos certificados
+  // Sincronizar con Backend para obtener cÃ¡lculos certificados
   syncWithBackend();
 }
 
 async function syncWithBackend() {
   if (!userData || !userData.peso) return;
   
-  console.info("🔒 Intentando certificar datos con el servidor...");
+  console.info("ðŸ”’ Intentando certificar datos con el servidor...");
   
   // Timeout de 3 segundos para no bloquear la experiencia del usuario
   const controller = new AbortController();
@@ -273,7 +273,7 @@ async function syncWithBackend() {
     const result = await response.json();
 
     if (result && result.success) {
-      console.info("✅ Sincronización Exitosa. Datos certificados por Vida Óptima.");
+      console.info("âœ… SincronizaciÃ³n Exitosa. Datos certificados por Vida Ã“ptima.");
       userData.kcal = result.kcal;
       userData.macros = result.macros;
       userData.perfil = result.perfil;
@@ -291,22 +291,22 @@ async function syncWithBackend() {
     }
   } catch (error) {
     clearTimeout(timeoutId);
-    console.warn("⚠️ Servidor no disponible. Modo Local Activo.");
-    // La app seguirá funcionando con los datos de engine.js (local)
+    console.warn("âš ï¸ Servidor no disponible. Modo Local Activo.");
+    // La app seguirÃ¡ funcionando con los datos de engine.js (local)
   }
 }
 
 function showModule(modName) {
   window.currentModule = modName;
   
-  // PROTECCIÓN FIREBASE: Si no hay usuario y no es onboarding/auth, forzar login
+  // PROTECCIÃ“N FIREBASE: Si no hay usuario y no es onboarding/auth, forzar login
   const user = auth.currentUser;
   if (!user && modName !== 'auth' && modName !== 'onboarding') {
     modName = 'auth';
     window.currentModule = 'auth';
   }
 
-  // Rastreo de Analítica
+  // Rastreo de AnalÃ­tica
   Analytics.trackEvent('module_view', { module: modName });
 
   // Update nav UI
@@ -314,7 +314,7 @@ function showModule(modName) {
   const link = Array.from(document.querySelectorAll('.dash-link')).find(l => l.getAttribute('onclick').includes(modName));
   if(link) link.classList.add('active');
 
-  // Si es móvil, cerrar el menú al hacer clic
+  // Si es mÃ³vil, cerrar el menÃº al hacer clic
   if (window.innerWidth <= 900) {
     const sidebar = document.getElementById('dashSidebar');
     const overlay = document.getElementById('mobileOverlay');
@@ -327,7 +327,7 @@ function showModule(modName) {
   const content = document.getElementById('dashContent');
   if (!content) return;
 
-  // Asegurar que userData esté cargado
+  // Asegurar que userData estÃ© cargado
   if (!userData || !userData.nombre) {
     const saved = localStorage.getItem('vidaOptima_user');
     if (saved) userData = JSON.parse(saved);
@@ -397,11 +397,11 @@ function restartApp() {
   location.reload();
 }
 
-// ── Imprimir Solo Lista de Compras ────────────────────────────────────────────
+// â”€â”€ Imprimir Solo Lista de Compras â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function printShoppingList() {
   // Grab only the shopping list section by ID
   const listSection = document.getElementById('shopping-list-printable');
-  if (!listSection) { alert('No se encontró la lista de compras.'); return; }
+  if (!listSection) { alert('No se encontrÃ³ la lista de compras.'); return; }
 
   const u = userData;
   const nombre = u.nombre || 'Usuario';
@@ -412,7 +412,7 @@ function printShoppingList() {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Lista de Compras — Vida Óptima</title>
+  <title>Lista de Compras â€” Vida Ã“ptima</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', Arial, sans-serif; color: #111; background: #fff; padding: 32px; }
@@ -438,17 +438,17 @@ function printShoppingList() {
 </head>
 <body>
   <div class="header">
-    <span class="badge">VIDA ÓPTIMA</span>
-    <h1>📋 Lista de Compras Semanal</h1>
+    <span class="badge">VIDA Ã“PTIMA</span>
+    <h1>ðŸ“‹ Lista de Compras Semanal</h1>
     <p>Preparada para: <strong>${nombre}</strong></p>
-    <p class="meta">Generada el ${fecha} · Válida hasta el próximo domingo</p>
+    <p class="meta">Generada el ${fecha} Â· VÃ¡lida hasta el prÃ³ximo domingo</p>
   </div>
   ${listSection.innerHTML}
   <div class="footer">
-    Vida Óptima — Tu Manual de Instrucción de Vida · Esta lista se actualiza automáticamente cada domingo
+    Vida Ã“ptima â€” Tu Manual de InstrucciÃ³n de Vida Â· Esta lista se actualiza automÃ¡ticamente cada domingo
   </div>
   <div class="no-print" style="text-align:center;margin-top:24px;">
-    <button onclick="window.print()" style="background:#1db954;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700;">🖨️ Imprimir / Guardar PDF</button>
+    <button onclick="window.print()" style="background:#1db954;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700;">ðŸ–¨ï¸ Imprimir / Guardar PDF</button>
   </div>
 </body>
 </html>`);
@@ -457,7 +457,7 @@ function printShoppingList() {
   setTimeout(function() { win.focus(); }, 300);
 }
 
-// ── Rastreo de Hábitos ────────────────────
+// â”€â”€ Rastreo de HÃ¡bitos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function toggleTaskStatus(dateStr, taskId, btnElement) {
   if(!userData.historial) userData.historial = {};
   
@@ -469,29 +469,29 @@ function toggleTaskStatus(dateStr, taskId, btnElement) {
     userData.historial[key] = true;
     btnElement.classList.add('checked');
     btnElement.classList.remove('failed');
-    btnElement.innerHTML = '✓';
+    btnElement.innerHTML = 'âœ“';
   } else if (currentState === true) {
     userData.historial[key] = false;
     btnElement.classList.remove('checked');
     btnElement.classList.add('failed');
-    btnElement.innerHTML = '✗';
+    btnElement.innerHTML = 'âœ—';
   } else {
     delete userData.historial[key];
     btnElement.classList.remove('checked');
     btnElement.classList.remove('failed');
-    btnElement.innerHTML = '○';
+    btnElement.innerHTML = 'â—‹';
   }
   
   syncUserData();
   
-  // Si estamos en la vista de progreso, re-renderizar para actualizar gráficas
+  // Si estamos en la vista de progreso, re-renderizar para actualizar grÃ¡ficas
   const activeLink = document.querySelector('.dash-link.active');
   if(activeLink && activeLink.getAttribute('onclick').includes('progreso')) {
     showModule('progreso');
   }
 }
 
-// ── Lógica Móvil ──────────────────────────
+// â”€â”€ LÃ³gica MÃ³vil â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function toggleMobileMenu() {
   const sidebar = document.getElementById('dashSidebar');
   const overlay = document.getElementById('mobileOverlay');
@@ -501,7 +501,7 @@ function toggleMobileMenu() {
   }
 }
 
-// ── Lógica del Modal de Comidas ───────────
+// â”€â”€ LÃ³gica del Modal de Comidas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function openMealModal(mealName) {
   document.getElementById('modalMealName').textContent = mealName;
   
@@ -519,7 +519,7 @@ function closeModal() {
   document.getElementById('mealModal').classList.add('hidden');
 }
 
-// ── Lógica de Modales de Info y Welcome ────
+// â”€â”€ LÃ³gica de Modales de Info y Welcome â”€â”€â”€â”€
 function openWelcomeModal() {
   document.getElementById('welcomeModal').classList.remove('hidden');
 }
@@ -533,16 +533,16 @@ function openInfoModal(title, type) {
   document.getElementById('infoThinking').classList.remove('hidden');
   document.getElementById('infoResult').classList.add('hidden');
 
-  let explanation = "Dato biológico.";
+  let explanation = "Dato biolÃ³gico.";
 
-  if (type === 'edad') explanation = "Tu edad biológica. El metabolismo se ralentiza un 2-5% por cada década después de los 30. Este plan contrarresta esa caída.";
-  else if (type === 'peso') explanation = "Tu peso total. Recuerda que el músculo pesa más que la grasa. No te obsesiones con el número, fíjate en cómo te queda la ropa.";
-  else if (type === 'imc') explanation = "Índice de Masa Corporal. Es una métrica general para ver tu relación peso/altura, pero no distingue si el peso es de grasa o de puro músculo.";
-  else if (type === 'kcal') explanation = "Calorías diarias estimadas. Es la energía exacta que tu cuerpo necesita hoy para funcionar y alcanzar tu objetivo (sin pasar hambre).";
-  else if (type === 'perfil') explanation = "Tu perfil metabólico base. El sistema adapta la velocidad y densidad de tus comidas considerando tu etapa de vida hormonal.";
-  else if (type === 'proteinas') explanation = "Los ladrillos de tu cuerpo. Reparan el tejido, crean enzimas y fortalecen el sistema inmunológico. Sin ellas, pierdes músculo.";
-  else if (type === 'carbos') explanation = "El combustible de tu cerebro y músculos. Te dan la energía explosiva para rendir en el día a día.";
-  else if (type === 'grasas') explanation = "Fundamentales para crear hormonas (como la testosterona o estrógeno) y absorber vitaminas clave (A, D, E, K).";
+  if (type === 'edad') explanation = "Tu edad biolÃ³gica. El metabolismo se ralentiza un 2-5% por cada dÃ©cada despuÃ©s de los 30. Este plan contrarresta esa caÃ­da.";
+  else if (type === 'peso') explanation = "Tu peso total. Recuerda que el mÃºsculo pesa mÃ¡s que la grasa. No te obsesiones con el nÃºmero, fÃ­jate en cÃ³mo te queda la ropa.";
+  else if (type === 'imc') explanation = "Ãndice de Masa Corporal. Es una mÃ©trica general para ver tu relaciÃ³n peso/altura, pero no distingue si el peso es de grasa o de puro mÃºsculo.";
+  else if (type === 'kcal') explanation = "CalorÃ­as diarias estimadas. Es la energÃ­a exacta que tu cuerpo necesita hoy para funcionar y alcanzar tu objetivo (sin pasar hambre).";
+  else if (type === 'perfil') explanation = "Tu perfil metabÃ³lico base. El sistema adapta la velocidad y densidad de tus comidas considerando tu etapa de vida hormonal.";
+  else if (type === 'proteinas') explanation = "Los ladrillos de tu cuerpo. Reparan el tejido, crean enzimas y fortalecen el sistema inmunolÃ³gico. Sin ellas, pierdes mÃºsculo.";
+  else if (type === 'carbos') explanation = "El combustible de tu cerebro y mÃºsculos. Te dan la energÃ­a explosiva para rendir en el dÃ­a a dÃ­a.";
+  else if (type === 'grasas') explanation = "Fundamentales para crear hormonas (como la testosterona o estrÃ³geno) y absorber vitaminas clave (A, D, E, K).";
 
   // Simular pensamiento de IA (1 segundo)
   setTimeout(() => {
@@ -557,7 +557,7 @@ function closeInfoModal() {
   document.getElementById('infoModal').classList.add('hidden');
 }
 
-// ── Lógica de Recomendaciones (Ciclo) ──────
+// â”€â”€ LÃ³gica de Recomendaciones (Ciclo) â”€â”€â”€â”€â”€â”€
 function nextRecomendacion(tipo) {
   if (!userData.recsIdx) {
     userData.recsIdx = { libros: 0, documentales: 0, podcasts: 0 };
@@ -572,8 +572,8 @@ function nextRecomendacion(tipo) {
   const user = auth.currentUser;
   if (user) {
     db.collection("users").doc(user.uid).set(userData, { merge: true })
-      .then(() => console.log("✅ Sincronizado en la nube"))
-      .catch(e => console.error("❌ Error sinc:", e));
+      .then(() => console.log("âœ… Sincronizado en la nube"))
+      .catch(e => console.error("âŒ Error sinc:", e));
   }
 
   syncUserData();
@@ -588,134 +588,134 @@ function getMealDetails(mealName) {
   let vitsList = [];
   let alts = [];
 
-  let water = "Bebe 1 vaso de agua 30 minutos antes de comer, y evita tomar más de medio vaso durante la comida para no diluir los jugos gástricos y mejorar la digestión.";
+  let water = "Bebe 1 vaso de agua 30 minutos antes de comer, y evita tomar mÃ¡s de medio vaso durante la comida para no diluir los jugos gÃ¡stricos y mejorar la digestiÃ³n.";
 
-  // 1. PROTEÍNAS
+  // 1. PROTEÃNAS
   if (name.includes('pollo') || name.includes('pavo')) {
     portions.push("<strong>Pollo/Pavo:</strong> 1.5 palmas de mano (aprox 150g-200g).");
-    preps.push("<strong>Pollo/Pavo:</strong> Sazona con sal, pimienta, ajo natural y orégano. Cocina a la plancha a fuego medio-alto. Deja reposar 3 min en el plato antes de cortarlo para que retenga sus jugos.");
-    vitsList.push("Vitamina B3 (Niacina) y Proteínas de alto valor.");
-    alts.push("🍗 Puedes sustituir el ave por atún, sardinas, huevos o cerdo magro.");
+    preps.push("<strong>Pollo/Pavo:</strong> Sazona con sal, pimienta, ajo natural y orÃ©gano. Cocina a la plancha a fuego medio-alto. Deja reposar 3 min en el plato antes de cortarlo para que retenga sus jugos.");
+    vitsList.push("Vitamina B3 (Niacina) y ProteÃ­nas de alto valor.");
+    alts.push("ðŸ— Puedes sustituir el ave por atÃºn, sardinas, huevos o cerdo magro.");
   }
   if (name.includes('carne') || name.includes('res') || name.includes('lomito') || name.includes('molida') || name.includes('bistec')) {
     portions.push("<strong>Carne de Res:</strong> 1 palma de mano (aprox 150g).");
-    preps.push("<strong>Res:</strong> Cocina a la plancha o guisada. Añade la sal al final de la cocción para retener más yodo y evitar que la carne se endurezca.");
-    vitsList.push("Hierro hemo (alta absorción) y Vitamina B12.");
+    preps.push("<strong>Res:</strong> Cocina a la plancha o guisada. AÃ±ade la sal al final de la cocciÃ³n para retener mÃ¡s yodo y evitar que la carne se endurezca.");
+    vitsList.push("Hierro hemo (alta absorciÃ³n) y Vitamina B12.");
   }
   if (name.includes('cerdo') || name.includes('chuleta')) {
     portions.push("<strong>Cerdo magro:</strong> 1 palma de mano (aprox 150g).");
-    preps.push("<strong>Cerdo:</strong> Asegúrate de cocinarlo muy bien (sin partes rosadas en el centro). Úsalo asado o a la plancha, evitando freírlo sumergido.");
+    preps.push("<strong>Cerdo:</strong> AsegÃºrate de cocinarlo muy bien (sin partes rosadas en el centro). Ãšsalo asado o a la plancha, evitando freÃ­rlo sumergido.");
     vitsList.push("Vitamina B1 (Tiamina) excelente para el sistema nervioso.");
   }
-  if (name.includes('pescado') || name.includes('atún') || name.includes('sardinas') || name.includes('salmón') || name.includes('merluza') || name.includes('tilapia')) {
+  if (name.includes('pescado') || name.includes('atÃºn') || name.includes('sardinas') || name.includes('salmÃ³n') || name.includes('merluza') || name.includes('tilapia')) {
     portions.push("<strong>Pescado:</strong> 150g fresco o 1 lata escurrida.");
-    preps.push("<strong>Pescado/Atún:</strong> Si es fresco, cocínalo al vapor/plancha con limón. Si es enlatado, escúrrelo bien para quitar el sodio/aceite industrial y mézclalo con vegetales frescos.");
-    vitsList.push("Omega-3 (EPA y DHA) crítico para cerebro y corazón.");
-    alts.push("🐟 Las sardinas enlatadas son el superalimento más barato del mundo. También puedes usar pollo o huevos.");
+    preps.push("<strong>Pescado/AtÃºn:</strong> Si es fresco, cocÃ­nalo al vapor/plancha con limÃ³n. Si es enlatado, escÃºrrelo bien para quitar el sodio/aceite industrial y mÃ©zclalo con vegetales frescos.");
+    vitsList.push("Omega-3 (EPA y DHA) crÃ­tico para cerebro y corazÃ³n.");
+    alts.push("ðŸŸ Las sardinas enlatadas son el superalimento mÃ¡s barato del mundo. TambiÃ©n puedes usar pollo o huevos.");
   }
   if (name.includes('huevo') || name.includes('omelette') || name.includes('tortilla')) {
     portions.push("<strong>Huevos:</strong> 2 a 3 unidades completas (con yema).");
-    preps.push("<strong>Huevos:</strong> Cocínalos a tu gusto (revueltos a fuego bajo, sancochados o escalfados). Evita freírlos nadando en aceite. <strong>Nota:</strong> Comer la yema es vital, ahí están las vitaminas.");
-    vitsList.push("Colina (esencial para el cerebro) y Luteína.");
+    preps.push("<strong>Huevos:</strong> CocÃ­nalos a tu gusto (revueltos a fuego bajo, sancochados o escalfados). Evita freÃ­rlos nadando en aceite. <strong>Nota:</strong> Comer la yema es vital, ahÃ­ estÃ¡n las vitaminas.");
+    vitsList.push("Colina (esencial para el cerebro) y LuteÃ­na.");
   }
 
   // 2. CARBOHIDRATOS Y GRANOS
-  if (name.includes('lentejas') || name.includes('caraotas') || name.includes('frijoles') || name.includes('porotos') || name.includes('feijão') || name.includes('garbanzos')) {
+  if (name.includes('lentejas') || name.includes('caraotas') || name.includes('frijoles') || name.includes('porotos') || name.includes('feijÃ£o') || name.includes('garbanzos')) {
     portions.push("<strong>Granos:</strong> 1.5 tazas (cocidos).");
-    preps.push("<strong>Granos:</strong> <strong>CRUCIAL:</strong> Remoja la noche anterior con limón o vinagre para eliminar antinutrientes (gases). Hierve hasta ablandar y echa la sal al final. Haz un sofrito natural con ajo y cebolla.");
-    vitsList.push("Magnesio, Folato y altísima dosis de fibra.");
-    alts.push("🍲 Si no toleras los granos, cámbialos por papa/yuca o come más proteínas.");
+    preps.push("<strong>Granos:</strong> <strong>CRUCIAL:</strong> Remoja la noche anterior con limÃ³n o vinagre para eliminar antinutrientes (gases). Hierve hasta ablandar y echa la sal al final. Haz un sofrito natural con ajo y cebolla.");
+    vitsList.push("Magnesio, Folato y altÃ­sima dosis de fibra.");
+    alts.push("ðŸ² Si no toleras los granos, cÃ¡mbialos por papa/yuca o come mÃ¡s proteÃ­nas.");
   }
   if (name.includes('arroz') || name.includes('pasta') || name.includes('quinoa')) {
     portions.push("<strong>Arroz/Pasta:</strong> 1 taza ya cocida.");
-    preps.push("<strong>Arroz/Pasta:</strong> <strong>Tip de Longevidad:</strong> Si lo cocinas hoy, lo enfrías en nevera y lo comes mañana, se convierte en 'almidón resistente', alimentando tu flora intestinal sin crear picos de insulina.");
-    vitsList.push("Hidratos de carbono limpios para energía.");
-    alts.push("🍚 Intercambiable por papa, yuca, batata o plátano.");
+    preps.push("<strong>Arroz/Pasta:</strong> <strong>Tip de Longevidad:</strong> Si lo cocinas hoy, lo enfrÃ­as en nevera y lo comes maÃ±ana, se convierte en 'almidÃ³n resistente', alimentando tu flora intestinal sin crear picos de insulina.");
+    vitsList.push("Hidratos de carbono limpios para energÃ­a.");
+    alts.push("ðŸš Intercambiable por papa, yuca, batata o plÃ¡tano.");
   }
-  if (name.includes('yuca') || name.includes('batata') || name.includes('papa') || name.includes('mandioca') || name.includes('plátano') || name.includes('tajadas') || name.includes('bolón')) {
-    portions.push("<strong>Tubérculo/Plátano:</strong> 1 taza o 1 unidad mediana.");
-    preps.push("<strong>Tubérculo/Plátano:</strong> Sancóchalo (hiérvelo) o ásalo al horno. Si haces tajadas de plátano, ásalas en el sartén con un toque de aceite de coco en lugar de freírlas en litros de aceite.");
+  if (name.includes('yuca') || name.includes('batata') || name.includes('papa') || name.includes('mandioca') || name.includes('plÃ¡tano') || name.includes('tajadas') || name.includes('bolÃ³n')) {
+    portions.push("<strong>TubÃ©rculo/PlÃ¡tano:</strong> 1 taza o 1 unidad mediana.");
+    preps.push("<strong>TubÃ©rculo/PlÃ¡tano:</strong> SancÃ³chalo (hiÃ©rvelo) o Ã¡salo al horno. Si haces tajadas de plÃ¡tano, Ã¡salas en el sartÃ©n con un toque de aceite de coco en lugar de freÃ­rlas en litros de aceite.");
     vitsList.push("Potasio y almidones complejos naturales.");
   }
-  if (name.includes('arepa') || name.includes('pan') || name.includes('tostada') || name.includes('sandwich') || name.includes('sándwich') || name.includes('casabe')) {
+  if (name.includes('arepa') || name.includes('pan') || name.includes('tostada') || name.includes('sandwich') || name.includes('sÃ¡ndwich') || name.includes('casabe')) {
     portions.push("<strong>Arepa/Pan:</strong> 1 arepa mediana o 2 rebanadas de pan (preferiblemente integral).");
-    preps.push("<strong>Pan/Arepa:</strong> Ásalos o tuéstalos. Si haces sándwich o rellenas la arepa, no uses salsas industriales (mayonesa); usa aguacate triturado, tomate o un toque de aceite de oliva.");
-    vitsList.push("Energía rápida (aporta fibra si es integral).");
+    preps.push("<strong>Pan/Arepa:</strong> Ãsalos o tuÃ©stalos. Si haces sÃ¡ndwich o rellenas la arepa, no uses salsas industriales (mayonesa); usa aguacate triturado, tomate o un toque de aceite de oliva.");
+    vitsList.push("EnergÃ­a rÃ¡pida (aporta fibra si es integral).");
   }
 
   // 3. DESAYUNOS Y ESPECIALES
-  if (name.includes('avena') && !name.includes('pancakes') && !name.includes('muchíncakes') && !name.includes('galleta')) {
+  if (name.includes('avena') && !name.includes('pancakes') && !name.includes('muchÃ­ncakes') && !name.includes('galleta')) {
     portions.push("<strong>Avena:</strong> 1/2 taza en crudo.");
-    preps.push("<strong>Avena:</strong> Cocina con agua/leche a fuego lento. Agrega canela generosamente para evitar picos de insulina. Nunca eches azúcar refinada, endulza con stevia o frutas picadas.");
+    preps.push("<strong>Avena:</strong> Cocina con agua/leche a fuego lento. Agrega canela generosamente para evitar picos de insulina. Nunca eches azÃºcar refinada, endulza con stevia o frutas picadas.");
     vitsList.push("Betaglucanos (fibra que baja el colesterol).");
   }
-  if (name.includes('pancakes') || name.includes('muchíncakes') || name.includes('panquecas')) {
+  if (name.includes('pancakes') || name.includes('muchÃ­ncakes') || name.includes('panquecas')) {
     portions.push("<strong>Pancakes:</strong> 2-3 unidades medianas.");
-    preps.push("<strong>Pancakes:</strong> Licúa la avena, plátano o yuca con huevo. Cocina en sartén antiadherente a fuego muy bajo y tapado para que esponjen bien por dentro.");
-    vitsList.push("Carbohidrato de absorción lenta y proteína.");
+    preps.push("<strong>Pancakes:</strong> LicÃºa la avena, plÃ¡tano o yuca con huevo. Cocina en sartÃ©n antiadherente a fuego muy bajo y tapado para que esponjen bien por dentro.");
+    vitsList.push("Carbohidrato de absorciÃ³n lenta y proteÃ­na.");
   }
   if (name.includes('yogur') || name.includes('bowl')) {
-    portions.push("<strong>Yogur:</strong> 1 taza (idealmente griego o natural sin azúcar).");
-    preps.push("<strong>Yogur:</strong> Evita yogures saborizados (tienen hasta 5 cucharadas de azúcar). Usa yogur natural y ponle tú el sabor en casa con frutas reales y semillas.");
-    vitsList.push("Probióticos esenciales para la flora intestinal.");
+    portions.push("<strong>Yogur:</strong> 1 taza (idealmente griego o natural sin azÃºcar).");
+    preps.push("<strong>Yogur:</strong> Evita yogures saborizados (tienen hasta 5 cucharadas de azÃºcar). Usa yogur natural y ponle tÃº el sabor en casa con frutas reales y semillas.");
+    vitsList.push("ProbiÃ³ticos esenciales para la flora intestinal.");
   }
   if (name.includes('sopa') || name.includes('crema') || name.includes('caldo')) {
     portions.push("<strong>Sopa/Crema:</strong> 1 plato hondo.");
-    preps.push("<strong>Sopa:</strong> Aprovecha de hervir vegetales y licuarlos para hacer cremas espesas (como zapallo o espinaca) sin necesidad de usar lácteos o harinas espesantes.");
+    preps.push("<strong>Sopa:</strong> Aprovecha de hervir vegetales y licuarlos para hacer cremas espesas (como zapallo o espinaca) sin necesidad de usar lÃ¡cteos o harinas espesantes.");
     vitsList.push("Electrolitos y vitaminas hidrosolubles.");
   }
   if (name.includes('smoothie') || name.includes('batido')) {
     portions.push("<strong>Batido:</strong> 1 vaso grande.");
     if (name.includes('verde')) {
-      preps.push("<strong>Smoothie Verde:</strong> Licúa 1 puñado de espinacas, 1/2 manzana verde, 1 rama de apio y jugo de medio limón con 1 vaso de agua. <strong>Advertencia:</strong> A diferencia de un jugo, el batido conserva toda la fibra. Bébelo despacio para que tu cuerpo lo digiera correctamente.");
-      vitsList.push("Hierro (espinaca), Vitamina C (limón) y mucha fibra triturada.");
+      preps.push("<strong>Smoothie Verde:</strong> LicÃºa 1 puÃ±ado de espinacas, 1/2 manzana verde, 1 rama de apio y jugo de medio limÃ³n con 1 vaso de agua. <strong>Advertencia:</strong> A diferencia de un jugo, el batido conserva toda la fibra. BÃ©belo despacio para que tu cuerpo lo digiera correctamente.");
+      vitsList.push("Hierro (espinaca), Vitamina C (limÃ³n) y mucha fibra triturada.");
     } else {
-      preps.push("<strong>Batido:</strong> Licúa los ingredientes muy bien. <strong>Advertencia:</strong> Un batido no es lo mismo que un jugo colado, este conserva toda la fibra de la fruta/vegetal, así que bébelo despacio para digerirlo bien.");
-      vitsList.push("Fibra triturada de fácil digestión.");
+      preps.push("<strong>Batido:</strong> LicÃºa los ingredientes muy bien. <strong>Advertencia:</strong> Un batido no es lo mismo que un jugo colado, este conserva toda la fibra de la fruta/vegetal, asÃ­ que bÃ©belo despacio para digerirlo bien.");
+      vitsList.push("Fibra triturada de fÃ¡cil digestiÃ³n.");
     }
   }
-  if (name.includes('ensalada') || name.includes('vegetales') || name.includes('brócoli') || name.includes('espinaca')) {
+  if (name.includes('ensalada') || name.includes('vegetales') || name.includes('brÃ³coli') || name.includes('espinaca')) {
     portions.push("<strong>Vegetales:</strong> Al menos la mitad de tu plato.");
-    preps.push("<strong>Vegetales:</strong> Puedes comerlos crudos, salteados o al vapor. Alíñalos con aceite de oliva, limón y sal, NUNCA con aderezos industriales de supermercado.");
-    vitsList.push("Fibra prebiótica, Vitamina C y antioxidantes.");
+    preps.push("<strong>Vegetales:</strong> Puedes comerlos crudos, salteados o al vapor. AlÃ­Ã±alos con aceite de oliva, limÃ³n y sal, NUNCA con aderezos industriales de supermercado.");
+    vitsList.push("Fibra prebiÃ³tica, Vitamina C y antioxidantes.");
   }
 
   // 4. BEBIDAS Y SNACKS
   if (name.includes('elixir') || name.includes('jugo') || name.includes('funcional')) {
     portions.push("<strong>Jugo:</strong> 1 vaso grande (300-400ml).");
-    preps.push("<strong>Jugo del Día:</strong> La receta específica de este jugo está detallada paso a paso en la sección <strong>🥤 Mis Jugos</strong> de tu menú lateral. ¡Ve allí para prepararlo!<br><em>Consejo clínico:</em> Bébelo apenas lo licúes para no oxidar las vitaminas.");
+    preps.push("<strong>Jugo del DÃ­a:</strong> La receta especÃ­fica de este jugo estÃ¡ detallada paso a paso en la secciÃ³n <strong>ðŸ¥¤ Mis Jugos</strong> de tu menÃº lateral. Â¡Ve allÃ­ para prepararlo!<br><em>Consejo clÃ­nico:</em> BÃ©belo apenas lo licÃºes para no oxidar las vitaminas.");
     vitsList.push("Antioxidantes y enzimas vivas.");
-    water = "El jugo hidrata, pero complementa con 1 vaso de agua extra 30 min después.";
+    water = "El jugo hidrata, pero complementa con 1 vaso de agua extra 30 min despuÃ©s.";
   }
   
-  if (name.includes('té') || name.includes('infusión') || name.includes('cacao') || name.includes('matcha') || name.includes('leche')) {
-    portions.push("<strong>Bebida:</strong> 1 Taza caliente o fría (250ml).");
-    preps.push("<strong>Bebida:</strong> Hierve el agua o calienta la leche/bebida vegetal. Agrega el té o cacao y reposa 5 min. <strong>Regla Innegociable:</strong> NUNCA endulzar con azúcar refinada. Usa stevia natural.");
+  if (name.includes('tÃ©') || name.includes('infusiÃ³n') || name.includes('cacao') || name.includes('matcha') || name.includes('leche')) {
+    portions.push("<strong>Bebida:</strong> 1 Taza caliente o frÃ­a (250ml).");
+    preps.push("<strong>Bebida:</strong> Hierve el agua o calienta la leche/bebida vegetal. Agrega el tÃ© o cacao y reposa 5 min. <strong>Regla Innegociable:</strong> NUNCA endulzar con azÃºcar refinada. Usa stevia natural.");
     vitsList.push("Polifenoles y/o antioxidantes relajantes.");
-    water = "Si tomas infusiones diuréticas (té verde, negro), acompáñalo con otro vaso de agua normal más tarde.";
+    water = "Si tomas infusiones diurÃ©ticas (tÃ© verde, negro), acompÃ¡Ã±alo con otro vaso de agua normal mÃ¡s tarde.";
   }
 
-  if (name.includes('merienda') || name.includes('galleta') || name.includes('nueces') || name.includes('fruta') || name.includes('cambur') || name.includes('maní')) {
-    // Evitamos duplicar si ya se detectó
+  if (name.includes('merienda') || name.includes('galleta') || name.includes('nueces') || name.includes('fruta') || name.includes('cambur') || name.includes('manÃ­')) {
+    // Evitamos duplicar si ya se detectÃ³
     if (!portions.join('').includes('Snack') && !name.includes('jugo')) {
-      portions.push("<strong>Snack:</strong> Porción pequeña (tamaño de tu puño cerrado).");
-      preps.push("<strong>Snack Sólido:</strong> Mastica muy bien cada bocado. Recuerda: las meriendas son opcionales. Si no tienes hambre real, sáltala para dejar descansar tu digestión.");
-      alts.push("🍵 Si no tienes el snack recetado, 1 fruta entera o 1 té sin azúcar siempre serán comodines perfectos.");
+      portions.push("<strong>Snack:</strong> PorciÃ³n pequeÃ±a (tamaÃ±o de tu puÃ±o cerrado).");
+      preps.push("<strong>Snack SÃ³lido:</strong> Mastica muy bien cada bocado. Recuerda: las meriendas son opcionales. Si no tienes hambre real, sÃ¡ltala para dejar descansar tu digestiÃ³n.");
+      alts.push("ðŸµ Si no tienes el snack recetado, 1 fruta entera o 1 tÃ© sin azÃºcar siempre serÃ¡n comodines perfectos.");
     }
   }
 
-  // 5. FALLBACK GENÉRICO
+  // 5. FALLBACK GENÃ‰RICO
   if (preps.length === 0) {
-    portions.push("<strong>Porción:</strong> Sírvete hasta sentirte 80% lleno, no hasta reventar.");
-    preps.push("1. Lava los ingredientes frescos.<br>2. Cocina a la plancha, horno o hervido.<br>3. Añade sal marina al final.<br>4. Mastica lentamente para favorecer la digestión.");
-    vitsList.push("Vitaminas y minerales según los ingredientes de tu plato.");
+    portions.push("<strong>PorciÃ³n:</strong> SÃ­rvete hasta sentirte 80% lleno, no hasta reventar.");
+    preps.push("1. Lava los ingredientes frescos.<br>2. Cocina a la plancha, horno o hervido.<br>3. AÃ±ade sal marina al final.<br>4. Mastica lentamente para favorecer la digestiÃ³n.");
+    vitsList.push("Vitaminas y minerales segÃºn los ingredientes de tu plato.");
   }
 
   // Compile final strings
   let finalPortion = portions.join('<br><br>');
   let finalPrep = preps.join('<br><br>');
   let finalVits = [...new Set(vitsList)].join(' | '); // Unique values
-  let finalAlt = alts.length > 0 ? alts.join('<br><br>') : "Cambia cualquier ingrediente por algo similar que tengas en casa (proteína por proteína, carb por carb).";
+  let finalAlt = alts.length > 0 ? alts.join('<br><br>') : "Cambia cualquier ingrediente por algo similar que tengas en casa (proteÃ­na por proteÃ­na, carb por carb).";
 
   return { portion: finalPortion, prep: finalPrep, vits: finalVits, water, alt: finalAlt };
 }
@@ -725,7 +725,7 @@ function toggleMenuType(type) {
   showModule('menu'); // Re-render menu module
 }
 
-// ── Lógica de Pago Cripto ────────────────────
+// â”€â”€ LÃ³gica de Pago Cripto â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function openCryptoPayment() {
   Analytics.trackEvent('payment_modal_open', { method: 'binance_pay' });
   const modalHtml = Modules.renderPaymentModal(userData);
@@ -739,13 +739,13 @@ function simulatePaymentSuccess(planType) {
   Analytics.trackEvent('payment_success', { method: 'binance_pay', plan: planType });
   
   const status = document.getElementById('paymentStatus');
-  if (status) status.innerHTML = "✅ ¡Pago Confirmado! Activando " + (isAnnual ? "Plan Anual..." : "Plan Mensual...");
+  if (status) status.innerHTML = "âœ… Â¡Pago Confirmado! Activando " + (isAnnual ? "Plan Anual..." : "Plan Mensual...");
   
   setTimeout(() => {
     userData.isPremium = true;
     userData.subscriptionType = planType;
     
-    // Si es anual y usó descuento, resetear coins
+    // Si es anual y usÃ³ descuento, resetear coins
     if (isAnnual && userData.discountUnlocked) {
       userData.coins = 0;
       userData.totalVideosWatched = 0; // Se reinicia el ciclo de la beca
@@ -765,13 +765,13 @@ function payWithCoins() {
     userData.isPremium = true;
     Analytics.trackEvent('payment_success', { method: 'optimal_coins', amount: cost });
     syncUserData();
-    alert("🎉 ¡Beca activada! Ya eres usuario Premium.");
+    alert("ðŸŽ‰ Â¡Beca activada! Ya eres usuario Premium.");
     location.reload();
   } else {
-    alert(`❌ Saldo insuficiente. Necesitas ${cost} monedas. ¡Sigue completando tareas en la Beca de Salud!`);
+    alert(`âŒ Saldo insuficiente. Necesitas ${cost} monedas. Â¡Sigue completando tareas en la Beca de Salud!`);
   }
 }
-// ── Lógica de la Beca de Salud (Videos y Recompensas) ──
+// â”€â”€ LÃ³gica de la Beca de Salud (Videos y Recompensas) â”€â”€
 function watchVideo() {
   const today = new Date().toDateString();
   
@@ -779,23 +779,23 @@ function watchVideo() {
   if (!userData.videosToday) userData.videosToday = 0;
   if (!userData.totalVideosWatched) userData.totalVideosWatched = 0;
 
-  // Validar cambio de día para reiniciar contador diario
+  // Validar cambio de dÃ­a para reiniciar contador diario
   if (userData.lastVideoDate !== today) {
     userData.videosToday = 0;
     userData.lastVideoDate = today;
   }
 
-  // Límite de 3 videos por día
+  // LÃ­mite de 3 videos por dÃ­a
   if (userData.videosToday >= 3) {
-    alert("🛑 Límite diario alcanzado. Tu cerebro necesita procesar la información. Vuelve mañana para seguir acumulando.");
+    alert("ðŸ›‘ LÃ­mite diario alcanzado. Tu cerebro necesita procesar la informaciÃ³n. Vuelve maÃ±ana para seguir acumulando.");
     return;
   }
 
-  // Simular visualización de video (3 segundos)
+  // Simular visualizaciÃ³n de video (3 segundos)
   const btn = event.target;
   const originalText = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = "📺 Procesando cápsula de salud...";
+  btn.innerHTML = "ðŸ“º Procesando cÃ¡psula de salud...";
 
   setTimeout(() => {
     userData.videosToday++;
@@ -809,7 +809,7 @@ function watchVideo() {
 
     syncUserData();
     
-    alert(`✅ ¡Video completado! +10 Optimal Coins. (${userData.videosToday}/3 hoy)`);
+    alert(`âœ… Â¡Video completado! +10 Optimal Coins. (${userData.videosToday}/3 hoy)`);
     
     btn.disabled = false;
     btn.innerHTML = originalText;
@@ -818,24 +818,24 @@ function watchVideo() {
   }, 3000);
 }
 
-// ── CONFIGURACIÓN DE MONETIZACIÓN ──
-const OFFERWALL_URL = ""; // PEGA AQUÍ TU URL DE ADGATE O BITLABS
+// â”€â”€ CONFIGURACIÃ“N DE MONETIZACIÃ“N â”€â”€
+const OFFERWALL_URL = ""; // PEGA AQUÃ TU URL DE ADGATE O BITLABS
 
-// ── Lógica Modal Ejercicios ─────────────────
-// Eliminada: Ahora las rutinas se renderizan nativamente con detalle clínico en el módulo.
+// â”€â”€ LÃ³gica Modal Ejercicios â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Eliminada: Ahora las rutinas se renderizan nativamente con detalle clÃ­nico en el mÃ³dulo.
 
 function toggleExerciseType(type) {
   window.currentExerciseType = type;
   showModule('ejercicio');
 }
 
-// ── Actualizar Perfil ───────────────────────
+// â”€â”€ Actualizar Perfil â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 window.updateProfile = function() {
   const btn = event.target;
   const originalText = btn.innerHTML;
   
   // "Thinking" state for a premium feel
-  btn.innerHTML = '🤔 Procesando cambios...';
+  btn.innerHTML = 'ðŸ¤” Procesando cambios...';
   btn.disabled = true;
   btn.style.opacity = '0.7';
 
@@ -888,13 +888,13 @@ window.updateProfile = function() {
   }, 1200); // 1.2s of "thinking"
 }
 
-// ── Iniciar ───────────────────────────────
+// â”€â”€ Iniciar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 window.onload = () => {
   const saved = localStorage.getItem('vidaOptima_user');
   if(saved) {
     try {
       userData = JSON.parse(saved);
-      // Migración para usuarios antiguos
+      // MigraciÃ³n para usuarios antiguos
       if (!userData.fechaRegistro) userData.fechaRegistro = new Date().toISOString();
       if (!userData.historial) userData.historial = {};
       
@@ -907,15 +907,15 @@ window.onload = () => {
   }
 };
 
-// ── SISTEMA DE PROTECCIÓN DE PROPIEDAD INTELECTUAL (Oculto) ────────────────
+// â”€â”€ SISTEMA DE PROTECCIÃ“N DE PROPIEDAD INTELECTUAL (Oculto) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 /**
- * Función de verificación de autoría para auditorías legales o due diligence.
- * Permite demostrar que el código es una creación original de Terry Romero.
+ * FunciÃ³n de verificaciÃ³n de autorÃ­a para auditorÃ­as legales o due diligence.
+ * Permite demostrar que el cÃ³digo es una creaciÃ³n original de Terry Romero.
  */
 window._verifyOwnership = function(key) {
   const secret = "TR-2025-VO-PLATFORM";
   if (key === secret) {
-    console.info("🛡️ PROPIEDAD INTELECTUAL VERIFICADA");
+    console.info("ðŸ›¡ï¸ PROPIEDAD INTELECTUAL VERIFICADA");
     console.info("Propietario: Terry Edicson Romero Loreto");
     console.info("Documento ID: 20.264.887");
     console.info("Firma Digital: " + Engine._signature);
@@ -925,23 +925,23 @@ window._verifyOwnership = function(key) {
   return false;
 };
 
-// ⌨️ ESCUCHADOR DE TECLAS PARA EL FUNDADOR (Ctrl + Alt + F)
+// âŒ¨ï¸ ESCUCHADOR DE TECLAS PARA EL FUNDADOR (Ctrl + Alt + F)
 window.addEventListener('keydown', function(e) {
   if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'f') {
-    const pass = prompt("🔐 SISTEMA DE SEGURIDAD VIDA ÓPTIMA\nIngrese la Llave Maestra del Fundador:");
+    const pass = prompt("ðŸ” SISTEMA DE SEGURIDAD VIDA Ã“PTIMA\nIngrese la Llave Maestra del Fundador:");
     const secret = "VidaOptima_Master_20264887";
     
     if (pass === secret) {
-      alert("✅ ACCESO CONCEDIDO\nBienvenido, Terry Edicson Romero Loreto.\nEstatus: Founder & CEO / Lead Architect.");
+      alert("âœ… ACCESO CONCEDIDO\nBienvenido, Terry Edicson Romero Loreto.\nEstatus: Founder & CEO / Lead Architect.");
       window._verifyOwnership("TR-2025-VO-PLATFORM");
-      // Aquí se pueden habilitar paneles ocultos en el futuro
+      // AquÃ­ se pueden habilitar paneles ocultos en el futuro
     } else if (pass !== null) {
-      alert("❌ ACCESO DENEGADO\nIntento de intrusión registrado.");
+      alert("âŒ ACCESO DENEGADO\nIntento de intrusiÃ³n registrado.");
     }
   }
 });
 
-// ── SISTEMA DE ANALÍTICA (Inteligencia de Negocio) ──
+// â”€â”€ SISTEMA DE ANALÃTICA (Inteligencia de Negocio) â”€â”€
 window.Analytics = {
   trackEvent(eventName, data = {}) {
     const deviceType = this.getDeviceType();
@@ -958,8 +958,8 @@ window.Analytics = {
       timestamp: new Date().toISOString()
     };
 
-    console.log("📊 [ANALYTICS]:", payload);
-    // Aquí se conectaría con Firebase/Mixpanel en el futuro:
+    console.log("ðŸ“Š [ANALYTICS]:", payload);
+    // AquÃ­ se conectarÃ­a con Firebase/Mixpanel en el futuro:
     // firebase.analytics().logEvent(eventName, payload);
   },
 
@@ -971,13 +971,13 @@ window.Analytics = {
   }
 };
 
-// ── SISTEMA DE MOTIVACIÓN ESTOICA ──
+// â”€â”€ SISTEMA DE MOTIVACIÃ“N ESTOICA â”€â”€
 window.StoicMotivator = {
   quotes: [
-    { text: "No es que tengamos poco tiempo, es que perdemos mucho. El cuerpo es tu única herramienta; úsala o piérdela.", author: "Séneca" },
-    { text: "La felicidad de tu vida depende de la calidad de tus pensamientos y la salud de tu templo físico.", author: "Marco Aurelio" },
-    { text: "Ningún hombre tiene el derecho de ser un aficionado en el entrenamiento físico. Es una lástima envejecer sin ver la fuerza de la que es capaz tu cuerpo.", author: "Sócrates" },
-    { text: "Dificultades reales son las que el destino nos pone; las demás son excusas de una mente débil. Haz tu rutina.", author: "Epicteto" }
+    { text: "No es que tengamos poco tiempo, es que perdemos mucho. El cuerpo es tu Ãºnica herramienta; Ãºsala o piÃ©rdela.", author: "SÃ©neca" },
+    { text: "La felicidad de tu vida depende de la calidad de tus pensamientos y la salud de tu templo fÃ­sico.", author: "Marco Aurelio" },
+    { text: "NingÃºn hombre tiene el derecho de ser un aficionado en el entrenamiento fÃ­sico. Es una lÃ¡stima envejecer sin ver la fuerza de la que es capaz tu cuerpo.", author: "SÃ³crates" },
+    { text: "Dificultades reales son las que el destino nos pone; las demÃ¡s son excusas de una mente dÃ©bil. Haz tu rutina.", author: "Epicteto" }
   ],
 
   checkEngagement() {
@@ -992,26 +992,26 @@ window.StoicMotivator = {
 
   showNotification() {
     const quote = this.quotes[Math.floor(Math.random() * this.quotes.length)];
-    // Simulación de notificación en UI
+    // SimulaciÃ³n de notificaciÃ³n en UI
     setTimeout(() => {
-      const msg = `🏛️ MENSAJE ESTOICO: "${quote.text}" — ${quote.author}`;
+      const msg = `ðŸ›ï¸ MENSAJE ESTOICO: "${quote.text}" â€” ${quote.author}`;
       console.log(msg);
-      // Podríamos mostrarlo en un toast o modal
+      // PodrÃ­amos mostrarlo en un toast o modal
     }, 3000);
   }
 };
 
-// Iniciar chequeo de motivación
+// Iniciar chequeo de motivaciÃ³n
 StoicMotivator.checkEngagement();
 
-// ── SISTEMA DE GAMIFICACIÓN ──
+// â”€â”€ SISTEMA DE GAMIFICACIÃ“N â”€â”€
 function checkDailyStreak() {
   if (!userData.lastCheckIn) return;
   
   const today = new Date().toDateString();
   const last = userData.lastCheckIn;
   
-  if (today === last) return; // Ya entró hoy
+  if (today === last) return; // Ya entrÃ³ hoy
   
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -1019,18 +1019,26 @@ function checkDailyStreak() {
   if (last === yesterday.toDateString()) {
     userData.streak++;
     userData.coins += 5; // Premio por racha
-    console.log("🔥 RACHA AUMENTADA:", userData.streak);
+    console.log("ðŸ”¥ RACHA AUMENTADA:", userData.streak);
   } else {
     userData.streak = 1;
-    console.log("❄️ RACHA REINICIADA");
+    console.log("â„ï¸ RACHA REINICIADA");
   }
   
   userData.lastCheckIn = today;
   syncUserData();
 }
 
+
 // Ejecutar al cargar
 setTimeout(checkDailyStreak, 2000);
-i f   ( ' s e r v i c e W o r k e r '   i n   n a v i g a t o r )   {   w i n d o w . a d d E v e n t L i s t e n e r ( ' l o a d ' ,   ( )   = >   {   n a v i g a t o r . s e r v i c e W o r k e r . r e g i s t e r ( ' / s w . j s ' ) . t h e n ( r e g   = >   c o n s o l e . l o g ( ' S W   R e g i s t e r e d ' ) ,   e r r   = >   c o n s o l e . l o g ( ' S W   F a i l e d ' ,   e r r ) ) ;   } ) ;   } 
- 
- 
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      console.log('SW Registered');
+    }).catch(err => {
+      console.log('SW Failed', err);
+    });
+  });
+}
