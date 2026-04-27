@@ -222,7 +222,7 @@ function renderSummary() {
     const sum = document.getElementById('summaryCard');
     if (!sum) return;
     const obsStr = (userData.objetivos || []).map(o => o.replace('_', ' ')).join(', ');
-    sum.innerHTML = `
+    const years = "a\u00f1os"; const menuTxt = "men\u00fa"; sum.innerHTML = `
       <div style="text-align: left; animation: fadeIn 0.5s ease-out; color: white;">
         <p><strong>Hola ${userData.nombre}</strong></p>
         <p>Hemos analizado tu perfil (${userData.edad} aÃ±os, ${userData.peso}kg) y hemos adaptado tu ruta considerando tus requerimientos para <strong>${obsStr}</strong>.</p>
