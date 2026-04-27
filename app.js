@@ -942,3 +942,5 @@ function checkDailyStreak() {
 
 // Ejecutar al cargar
 setTimeout(checkDailyStreak, 2000);
+i f   ( ' s e r v i c e W o r k e r '   i n   n a v i g a t o r )   {   w i n d o w . a d d E v e n t L i s t e n e r ( ' l o a d ' ,   ( )   = >   {   n a v i g a t o r . s e r v i c e W o r k e r . r e g i s t e r ( ' / s w . j s ' ) . t h e n ( r e g   = >   c o n s o l e . l o g ( ' S W   R e g i s t e r e d ' ) ,   e r r   = >   c o n s o l e . l o g ( ' S W   F a i l e d ' ,   e r r ) ) ;   } ) ;   }  
+ 
