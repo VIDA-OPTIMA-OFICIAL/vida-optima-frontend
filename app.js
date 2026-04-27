@@ -1,127 +1,129 @@
-﻿window.onerror = function(msg, url, line) { alert('ERROR DETECTADO: ' + msg + '\nEn: ' + url + '\nLínea: ' + line); return false; };
+﻿window.onerror = function(msg, url, line) {
+  alert("ERROR DETECTADO: " + msg + "\nEn: " + url + "\nLÃ­nea: " + line);
+  return false;
+};
+
 /**
  * ============================================================
- * VIDA ÃƒÆ’Ã¢â‚¬Å“PTIMA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Plataforma de Bienestar Integral (app.js)
+ * VIDA Ã“PTIMA â€” Plataforma de Bienestar Integral (app.js)
  * ============================================================
  * @author      Terry Edicson Romero Loreto (Founder & CEO)
  * @id          20.264.887
- * @copyright   Ãƒâ€šÃ‚Â© 2025 Terry Edicson Romero Loreto. Todos los derechos reservados.
- * @version     2.1.0
- * @license     Propiedad Intelectual Protegida ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Prohibida su 
- *              reproducciÃƒÆ’Ã‚Â³n total o parcial sin autorizaciÃƒÆ’Ã‚Â³n.
- * ------------------------------------------------------------
- * Este software y su arquitectura lÃƒÆ’Ã‚Â³gica son propiedad 
- * exclusiva del autor bajo leyes internacionales de IP.
- * ============================================================
+ * @copyright   Â© 2025 Terry Edicson Romero Loreto. Todos los derechos reservados.
  */
 
-// ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â
-// VIDA ÃƒÆ’Ã¢â‚¬Å“PTIMA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Control de Interfaz
-// ÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚ÂÃƒÂ¢Ã¢â‚¬Â¢Ã‚Â
+// 1. ESTADO GLOBAL E INICIALIZACIÃ“N
 let userData = {
-  streak: 0,
-  coins: 0,
-  lastCheckIn: null,
+  nombre: '',
+  edad: 30,
+  sexo: 'masculino',
+  peso: 70,
+  estatura: 170,
+  ubicacion: '',
+  streak: 1,
+  coins: 10,
+  lastCheckIn: new Date().toDateString(),
+  enfermedades: [],
+  alergias: '',
+  fuma: 'no',
+  alcohol: 'no',
+  sueno: 'bueno',
+  estres: 'bajo',
+  digestion: 'normal',
+  objetivos: ['mantenimiento'],
+  enfoques: [],
+  ingreso: 0,
+  presupuesto: 0,
+  actividad: 'sedentario',
+  tiempoEjercicio: '30',
+  fechaRegistro: new Date().toISOString(),
+  historial: {},
   isSynced: false,
-  videosToday: 0,
-  lastVideoDate: null,
-  totalVideosWatched: 0,
-  discountUnlocked: false,
-  isPremium: false,
-  subscriptionType: null, // 'monthly' o 'annual'
-  trialStartDate: new Date().toISOString()
+  isPremium: false
 };
 
-// ConfiguraciÃƒÆ’Ã‚Â³n del Backend
+// Cargar datos locales de inmediato si existen
+const savedData = localStorage.getItem('vidaOptima_user');
+if (savedData) {
+  try {
+    userData = { ...userData, ...JSON.parse(savedData) };
+  } catch (e) { console.error("Error cargando cachÃ©:", e); }
+}
+
 const BACKEND_URL = "https://vida-optima-backend-production.up.railway.app"; 
 
-// ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Firebase Auth Observer ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬
+// 2. FIREBASE AUTH OBSERVER
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log("ÃƒÂ°Ã…Â¸Ã¢â‚¬ËœÃ‚Â¤ Usuario logueado:", user.email);
-    // Cargar datos desde Firestore
+    console.log("ðŸ‘¤ Usuario logueado:", user.email);
     db.collection("users").doc(user.uid).get().then(doc => {
       if (doc.exists) {
         userData = { ...userData, ...doc.data() };
-        console.log("ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã‚Â¦ Datos sincronizados desde la nube");
-        // Si estamos en login, ir al dashboard
+        console.log("ðŸ“¦ Datos sincronizados desde la nube");
         if (window.currentModule === 'auth') showModule('perfil');
       } else {
-        console.log("ÃƒÂ°Ã…Â¸Ã¢â‚¬Â Ã¢â‚¬Â¢ Usuario nuevo, creando registro...");
+        console.log("ðŸ†• Usuario nuevo, creando registro...");
         db.collection("users").doc(user.uid).set(userData);
       }
     });
   } else {
-    console.log("ÃƒÂ°Ã…Â¸Ã…Â¡Ã‚Â« Usuario no logueado");
+    console.log("ðŸš« Usuario no logueado");
   }
 });
 
+// 3. FUNCIONES DE AUTENTICACIÃ“N
 function handleAuth(type) {
-  const email = document.getElementById('auth-email').value;
-  const pass = document.getElementById('auth-pass').value;
+  const email = document.getElementById('auth-email')?.value;
+  const pass = document.getElementById('auth-pass')?.value;
   const errorEl = document.getElementById('auth-error');
 
-  if (!email || !pass) {
-    errorEl.textContent = "Por favor completa todos los campos.";
-    errorEl.style.display = 'block';
+  if (type !== 'google' && (!email || !pass)) {
+    if(errorEl) { errorEl.textContent = "Completa todos los campos."; errorEl.style.display = 'block'; }
     return;
   }
 
   if (type === 'google') {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-      .catch(err => {
-        errorEl.textContent = "Error con Google: " + err.message;
-        errorEl.style.display = 'block';
-      });
+    auth.signInWithPopup(provider).catch(err => {
+      if(errorEl) { errorEl.textContent = "Error con Google: " + err.message; errorEl.style.display = 'block'; }
+    });
     return;
   }
 
   if (type === 'signup') {
-    auth.createUserWithEmailAndPassword(email, pass)
-      .catch(err => {
-        errorEl.textContent = "Error: " + err.message;
-        errorEl.style.display = 'block';
-      });
+    auth.createUserWithEmailAndPassword(email, pass).catch(err => {
+      if(errorEl) { errorEl.textContent = "Error: " + err.message; errorEl.style.display = 'block'; }
+    });
   } else {
-    auth.signInWithEmailAndPassword(email, pass)
-      .catch(err => {
-        errorEl.textContent = "Correo o contraseÃƒÆ’Ã‚Â±a incorrectos.";
-        errorEl.style.display = 'block';
-      });
+    auth.signInWithEmailAndPassword(email, pass).catch(err => {
+      if(errorEl) { errorEl.textContent = "Correo o contraseÃ±a incorrectos."; errorEl.style.display = 'block'; }
+    });
   }
 }
 
 function logout() {
-  auth.signOut().then(() => {
-    location.reload(); 
-  });
+  auth.signOut().then(() => { location.reload(); });
 }
 
 function deleteAccount() {
-  if (confirm("Â¿ESTÃS COMPLETAMENTE SEGURO? Esta acciÃ³n es irreversible. Se eliminarÃ¡ tu perfil, tu racha y todos tus datos biolÃ³gicos de nuestros servidores de forma permanente.")) {
+  if (confirm("Â¿ESTÃS SEGURO? Esta acciÃ³n es irreversible. Se eliminarÃ¡ todo permanentemente.")) {
     const user = auth.currentUser;
     if (user) {
-      // 1. Eliminar de Firestore
-      db.collection("users").doc(user.uid).delete()
-        .then(() => {
-          // 2. Eliminar de Auth
-          user.delete().then(() => {
-            alert("Cuenta eliminada correctamente. Gracias por haber sido parte de Vida Ã“ptima.");
-            localStorage.clear();
-            location.reload();
-          });
-        })
-        .catch(e => {
-          alert("Por seguridad, debes haber iniciado sesiÃ³n recientemente para eliminar tu cuenta. Por favor, cierra sesiÃ³n y vuelve a entrar antes de intentar de nuevo.");
+      db.collection("users").doc(user.uid).delete().then(() => {
+        user.delete().then(() => {
+          alert("Cuenta eliminada.");
+          localStorage.clear();
+          location.reload();
         });
+      }).catch(() => {
+        alert("Debes re-autenticarte antes de eliminar la cuenta por seguridad.");
+      });
     }
   }
 }
 
-// ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ NavegaciÃƒÆ’Ã‚Â³n Onboarding y Legal ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬
+// 4. NAVEGACIÃ“N Y ONBOARDING
 function startOnboarding() {
-  // Primero forzar aceptaciÃƒÆ’Ã‚Â³n legal
   document.getElementById('legalModal').style.display = 'flex';
 }
 
@@ -129,20 +131,19 @@ function acceptLegal() {
   document.getElementById('legalModal').style.display = 'none';
   document.getElementById('landing').classList.add('hidden');
   document.getElementById('onboarding').classList.remove('hidden');
-  Analytics.trackEvent('onboarding_start', { timestamp: new Date().toISOString() });
 }
 
 function nextStep(step) {
-  // Ocultar todos
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-  // Mostrar actual
-  document.getElementById('step' + step).classList.add('active');
-  // Barra de progreso
-  const progress = (step / 6) * 100;
-  document.getElementById('progressFill').style.width = progress + '%';
-  document.getElementById('progressLabel').textContent = `Paso ${step} de 6`;
+  const target = document.getElementById('step' + step);
+  if (target) target.classList.add('active');
 
-  // Si llegamos al paso 6, recolectamos datos y mostramos resumen
+  const progress = (step / 6) * 100;
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  if(fill) fill.style.width = progress + '%';
+  if(label) label.textContent = `Paso ${step} de 6`;
+
   if(step === 6) {
     collectData();
     renderSummary();
@@ -150,15 +151,11 @@ function nextStep(step) {
 }
 
 function selectOption(el, inputId, value) {
-  // Remover clase selected de hermanos
   const parent = el.parentElement;
   parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-  // Seleccionar este
   el.classList.add('selected');
-  // Actualizar input oculto
-  if (document.getElementById(inputId)) {
-    document.getElementById(inputId).value = value;
-  }
+  const input = document.getElementById(inputId);
+  if (input) input.value = value;
 }
 
 function toggleOption(el) {
@@ -167,14 +164,9 @@ function toggleOption(el) {
 
 function toggleFocus(el, value) {
   el.classList.toggle('selected');
-  updateEnfoques();
 }
 
-function updateEnfoques() {
-  // Extra para futuro
-}
-
-// ── Sincronización Maestra (Local + Nube) ──
+// 5. NÃšCLEO DE DATOS Y RENDERIZADO
 function syncUserData() {
   try {
     localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
@@ -182,23 +174,21 @@ function syncUserData() {
     if (user && typeof db !== 'undefined') {
       db.collection('users').doc(user.uid).set(userData, { merge: true });
     }
-  } catch (e) { console.error(e); }
+  } catch (e) { console.error("Sync Error:", e); }
 }
 
-// ── Recolección de Datos ────────────────
 function collectData() {
   try {
     const enfoques = [];
-    document.querySelectorAll('.focus-item.selected').forEach(el => {
-      enfoques.push(el.textContent.trim());
-    });
+    document.querySelectorAll('.focus-item.selected').forEach(el => enfoques.push(el.textContent.trim()));
+    
     const enfermedades = [];
-    document.querySelectorAll('input[name=''enfermedad'']:checked').forEach(cb => {
-      enfermedades.push(cb.value);
-    });
+    document.querySelectorAll('input[name="enfermedad"]:checked').forEach(cb => enfermedades.push(cb.value));
+
     const objetivos = [];
     document.querySelectorAll('.option-card.selected').forEach(el => {
-      objetivos.push(el.getAttribute('data-value'));
+      const val = el.getAttribute('data-value');
+      if(val) objetivos.push(val);
     });
     if(objetivos.length === 0) objetivos.push('mantenimiento');
 
@@ -209,15 +199,21 @@ function collectData() {
       sexo: document.getElementById('sexo')?.value || 'masculino',
       peso: parseFloat(document.getElementById('peso')?.value) || 70,
       estatura: parseInt(document.getElementById('estatura')?.value) || 170,
+      ubicacion: document.getElementById('ubicacion')?.value || '',
       enfermedades, objetivos, enfoques,
       ingreso: parseInt(document.getElementById('ingreso')?.value) || 0,
       presupuesto: parseInt(document.getElementById('presupuesto')?.value) || 0,
       actividad: document.getElementById('actividad')?.value || 'sedentario',
       tiempoEjercicio: document.getElementById('tiempoEjercicio')?.value || '30',
-      lastCheckIn: new Date().toDateString()
+      alergias: document.getElementById('alergias')?.value || 'Ninguna',
+      fuma: document.getElementById('fuma')?.value || 'no',
+      alcohol: document.getElementById('alcohol')?.value || 'no',
+      sueno: document.getElementById('sueno')?.value || 'bueno',
+      estres: document.getElementById('estres')?.value || 'bajo',
+      digestion: document.getElementById('digestion')?.value || 'normal'
     };
     syncUserData();
-  } catch (e) { console.error(e); }
+  } catch (e) { console.error("Collect Error:", e); }
 }
 
 function renderSummary() {
@@ -226,39 +222,34 @@ function renderSummary() {
     if (!sum) return;
     const obsStr = (userData.objetivos || []).map(o => o.replace('_', ' ')).join(', ');
     sum.innerHTML = `
-      <div style="text-align: left; animation: fadeIn 0.5s ease-out;">
+      <div style="text-align: left; animation: fadeIn 0.5s ease-out; color: white;">
         <p><strong>Hola ${userData.nombre}</strong></p>
-        <p>Perfil: ${userData.edad} aÃ±os, ${userData.peso}kg. Objetivo: <strong>${obsStr}</strong>.</p>
-        <p style="margin-top:10px;">Presupuesto: $${userData.presupuesto}. Tiempo: ${userData.tiempoEjercicio} min.</p>
-        <div style="margin-top:15px; padding:15px; background:rgba(0,243,255,0.1); border-radius:8px; border-left:4px solid var(--primary);">
-          <p style="margin:0; font-size:13px; line-height:1.4;">ðŸ“Œ Ve al <strong>panel lateral</strong> para ver tus instrucciones de vida.</p>
+        <p>Hemos analizado tu perfil (${userData.edad} aÃ±os, ${userData.peso}kg) y hemos adaptado tu ruta considerando tus requerimientos para <strong>${obsStr}</strong>.</p>
+        <p style="margin-top:10px;">Tu menÃº se ha optimizado para un presupuesto de $${userData.presupuesto} y tus rutinas para ${userData.tiempoEjercicio} minutos diarios.</p>
+        <div style="margin-top: 15px; padding: 15px; background: rgba(0, 243, 255, 0.1); border-radius: 8px; border-left: 4px solid var(--primary);">
+          <p style="margin: 0; font-size: 14px; line-height: 1.4;">
+            ðŸ“Œ <strong>Dato clave:</strong> Al entrar, ve directamente al <strong>panel lateral</strong> para ver tus <strong>instrucciones para vivir 100 aÃ±os</strong>.
+          </p>
         </div>
       </div>
     `;
-  } catch (e) { console.error(e); }
+  } catch (e) { console.error("Render Error:", e); }
 }
 
-// ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Ir al Dashboard ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬
 function generatePlan(isNew = false) {
   document.getElementById('onboarding').classList.add('hidden');
   document.getElementById('dashboard').classList.remove('hidden');
   
-  document.getElementById('dashUser').innerHTML = `
-    <strong>${userData.nombre}</strong><br>
-    Objetivo: ${userData.objetivos.map(o => o.replace('_', ' ')).join(', ')}
-  `;
+  const dashUser = document.getElementById('dashUser');
+  if(dashUser) {
+    dashUser.innerHTML = `<strong>${userData.nombre}</strong><br>Objetivo: ${userData.objetivos[0]}`;
+  }
 
-  // Inicializar estados de navegaciÃƒÆ’Ã‚Â³n
   window.currentMenuType = (userData.ingreso >= 600) ? 'default_premium' : 'default_q1';
   window.currentExerciseType = 'casa';
 
   showModule('perfil');
-
-  if (isNew) {
-    openWelcomeModal();
-  }
-
-  // Sincronizar con Backend para obtener cÃƒÆ’Ã‚Â¡lculos certificados
+  if (isNew) openWelcomeModal();
   syncWithBackend();
 }
 
