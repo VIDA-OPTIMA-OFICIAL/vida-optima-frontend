@@ -38,8 +38,13 @@ const Modules = {
             <input type="password" id="auth-pass" placeholder="••••••••" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px;">
           </div>
           
-          <button class="btn-primary" style="width: 100%; margin-bottom: 15px; padding: 15px;" onclick="handleAuth('login')">ENTRAR AL SISTEMA</button>
-          <button class="btn-secondary" style="width: 100%; padding: 12px; border: 1px solid var(--border); background: transparent; color: var(--text2);" onclick="handleAuth('signup')">CREAR NUEVA CUENTA</button>
+          <button class="btn-primary" style="width: 100%; margin-bottom: 12px; padding: 15px;" onclick="handleAuth('login')">ENTRAR AL SISTEMA</button>
+          
+          <button class="btn-secondary" style="width: 100%; padding: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; background: white; color: #000; border: none;" onclick="handleAuth('google')">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width: 18px;"> Continuar con Google
+          </button>
+
+          <button style="width: 100%; padding: 10px; background: transparent; border: none; color: var(--text3); font-size: 12px; cursor: pointer; text-decoration: underline;" onclick="handleAuth('signup')">Crear cuenta con correo</button>
           
           <div id="auth-error" style="color: var(--red); font-size: 13px; margin-top: 15px; display: none; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 5px;"></div>
         </div>
@@ -193,10 +198,13 @@ const Modules = {
               </div>
             </div>
           </div>
-          <!-- Botón Cerrar Sesión -->
-          <div style="margin-top: 40px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px;">
+          <!-- Opciones de Cuenta -->
+          <div style="margin-top: 40px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; display: flex; flex-direction: column; gap: 12px; align-items: center;">
             <button style="font-size: 11px; opacity: 0.5; border: none; background: transparent; color: var(--text3); cursor: pointer;" onclick="logout()">
               🚪 CERRAR SESIÓN SEGURA
+            </button>
+            <button style="font-size: 10px; opacity: 0.3; border: none; background: transparent; color: var(--red); cursor: pointer; text-decoration: underline;" onclick="deleteAccount()">
+              Eliminar mi cuenta y mis datos permanentemente
             </button>
           </div>
         </div>

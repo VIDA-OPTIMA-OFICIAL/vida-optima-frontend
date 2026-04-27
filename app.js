@@ -66,6 +66,16 @@ function handleAuth(type) {
     return;
   }
 
+  if (type === 'google') {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .catch(err => {
+        errorEl.textContent = "Error con Google: " + err.message;
+        errorEl.style.display = 'block';
+      });
+    return;
+  }
+
   if (type === 'signup') {
     auth.createUserWithEmailAndPassword(email, pass)
       .catch(err => {
@@ -83,8 +93,29 @@ function handleAuth(type) {
 
 function logout() {
   auth.signOut().then(() => {
-    location.reload(); // Reiniciar para limpiar estado
+    location.reload(); 
   });
+}
+
+function deleteAccount() {
+  if (confirm("¿ESTÁS COMPLETAMENTE SEGURO? Esta acción es irreversible. Se eliminará tu perfil, tu racha y todos tus datos biológicos de nuestros servidores de forma permanente.")) {
+    const user = auth.currentUser;
+    if (user) {
+      // 1. Eliminar de Firestore
+      db.collection("users").doc(user.uid).delete()
+        .then(() => {
+          // 2. Eliminar de Auth
+          user.delete().then(() => {
+            alert("Cuenta eliminada correctamente. Gracias por haber sido parte de Vida Óptima.");
+            localStorage.clear();
+            location.reload();
+          });
+        })
+        .catch(e => {
+          alert("Por seguridad, debes haber iniciado sesión recientemente para eliminar tu cuenta. Por favor, cierra sesión y vuelve a entrar antes de intentar de nuevo.");
+        });
+    }
+  }
 }
 
 // Ã¢â€â‚¬Ã¢â€â‚¬ NavegaciÃƒÂ³n Onboarding y Legal Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
