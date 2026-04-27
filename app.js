@@ -1,4 +1,5 @@
-﻿/**
+﻿window.onerror = function(msg, url, line) { alert('ERROR DETECTADO: ' + msg + '\nEn: ' + url + '\nLínea: ' + line); return false; };
+/**
  * ============================================================
  * VIDA ÃƒÆ’Ã¢â‚¬Å“PTIMA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Plataforma de Bienestar Integral (app.js)
  * ============================================================
