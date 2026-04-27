@@ -1,4 +1,5 @@
-﻿window.onerror = function(msg, url, line) {
+﻿console.log('VIDA OPTIMA V2.1.2 ACTIVE'); window.addEventListener('load', () => { setTimeout(() => { if(document.getElementById('step6').classList.contains('active')) { collectData(); renderSummary(); } }, 500); });
+window.onerror = function(msg, url, line) {
   alert("ERROR DETECTADO: " + msg + "\nEn: " + url + "\nLÃ­nea: " + line);
   return false;
 };
