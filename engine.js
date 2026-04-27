@@ -1299,7 +1299,7 @@ const Engine = {
     cognitivo: [
       'Aprender algo nuevo cada semana (instrumento, idioma, habilidad) — crea nuevas sinapsis',
       'Leer 20 minutos antes de dormir — reduce el estrés un 68% más que otras actividades',
-      'Meditar 10 minutos al día — apps gratuitas: Insight Timer, Medito',
+      'Meditar 10 minutos al día — Usa nuestra guía de respiración rítmica',
       'Ayuno digital 1 hora al despertar y 1 hora antes de dormir',
       'Juegos de lógica: ajedrez, sudoku, crucigramas — mantienen la plasticidad cerebral',
       'Escribir 3 cosas por las que estás agradecido cada mañana — reentrena el filtro de negatividad del cerebro',
