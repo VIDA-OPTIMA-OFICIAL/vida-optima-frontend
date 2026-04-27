@@ -1,19 +1,22 @@
-﻿console.log('VIDA OPTIMA V2.1.2 ACTIVE'); window.addEventListener('load', () => { setTimeout(() => { if(document.getElementById('step6').classList.contains('active')) { collectData(); renderSummary(); } }, 500); });
-window.onerror = function(msg, url, line) {
-  alert("ERROR DETECTADO: " + msg + "\nEn: " + url + "\nLÃ­nea: " + line);
-  return false;
-};
-
-/**
+﻿/**
  * ============================================================
  * VIDA Ã“PTIMA â€” Plataforma de Bienestar Integral (app.js)
  * ============================================================
- * @author      Terry Edicson Romero Loreto (Founder & CEO)
- * @id          20.264.887
- * @copyright   Â© 2025 Terry Edicson Romero Loreto. Todos los derechos reservados.
+ * VERSIÃ“N: 2.1.3 - STABLE
+ * ============================================================
  */
 
-// 1. ESTADO GLOBAL E INICIALIZACIÃ“N
+// 1. GESTIÃ“N DE ERRORES Y CARGA SEGURA
+window.onerror = function(msg, url, line) {
+  console.error("Error detectado:", msg, "en", url, "lÃ­nea", line);
+  // Solo alertar si es crÃ­tico y no es de extensiones
+  if(msg.includes('auth') || msg.includes('userData')) {
+     alert("âš ï¸ Error de ConexiÃ³n: " + msg + "\nPor favor, recarga la pÃ¡gina.");
+  }
+  return false;
+};
+
+// 2. ESTADO GLOBAL
 let userData = {
   nombre: '',
   edad: 30,
@@ -43,87 +46,80 @@ let userData = {
   isPremium: false
 };
 
-// Cargar datos locales de inmediato si existen
-const savedData = localStorage.getItem('vidaOptima_user');
-if (savedData) {
-  try {
-    userData = { ...userData, ...JSON.parse(savedData) };
-  } catch (e) { console.error("Error cargando cachÃ©:", e); }
-}
+// 3. INICIALIZACIÃ“N DE FIREBASE (ESPERA SEGURA)
+function initApp() {
+  console.log("ðŸš€ Iniciando Vida Ã“ptima...");
+  
+  // Cargar datos locales
+  const savedData = localStorage.getItem('vidaOptima_user');
+  if (savedData) {
+    try {
+      userData = { ...userData, ...JSON.parse(savedData) };
+    } catch (e) { console.error("Error de cachÃ© local"); }
+  }
 
-const BACKEND_URL = "https://vida-optima-backend-production.up.railway.app"; 
-
-// 2. FIREBASE AUTH OBSERVER
-auth.onAuthStateChanged(user => {
-  if (user) {
-    console.log("ðŸ‘¤ Usuario logueado:", user.email);
-    db.collection("users").doc(user.uid).get().then(doc => {
-      if (doc.exists) {
-        userData = { ...userData, ...doc.data() };
-        console.log("ðŸ“¦ Datos sincronizados desde la nube");
-        if (window.currentModule === 'auth') showModule('perfil');
-      } else {
-        console.log("ðŸ†• Usuario nuevo, creando registro...");
-        db.collection("users").doc(user.uid).set(userData);
+  // Verificar Firebase
+  if (typeof auth !== 'undefined') {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log("ðŸ‘¤ SesiÃ³n activa:", user.email);
+        db.collection("users").doc(user.uid).get().then(doc => {
+          if (doc.exists) {
+            userData = { ...userData, ...doc.data() };
+            if (window.currentModule === 'auth') showModule('perfil');
+          }
+        });
       }
     });
-  } else {
-    console.log("ðŸš« Usuario no logueado");
   }
-});
 
-// 3. FUNCIONES DE AUTENTICACIÃ“N
+  // Si el usuario estÃ¡ en el paso 6 al cargar (refresco)
+  setTimeout(() => {
+    const step6 = document.getElementById('step6');
+    if (step6 && step6.classList.contains('active')) {
+      collectData();
+      renderSummary();
+    }
+  }, 1000);
+}
+
+// Arrancar cuando el DOM y los scripts estÃ©n listos
+window.addEventListener('load', initApp);
+
+// 4. FUNCIONES DE AUTENTICACIÃ“N
 function handleAuth(type) {
+  if (typeof auth === 'undefined') return alert("Sistema de autenticaciÃ³n cargando... espera un segundo.");
+  
   const email = document.getElementById('auth-email')?.value;
   const pass = document.getElementById('auth-pass')?.value;
   const errorEl = document.getElementById('auth-error');
 
-  if (type !== 'google' && (!email || !pass)) {
-    if(errorEl) { errorEl.textContent = "Completa todos los campos."; errorEl.style.display = 'block'; }
-    return;
-  }
-
   if (type === 'google') {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).catch(err => {
-      if(errorEl) { errorEl.textContent = "Error con Google: " + err.message; errorEl.style.display = 'block'; }
+      if(errorEl) errorEl.textContent = "Error Google: " + err.message;
     });
     return;
   }
 
+  if (!email || !pass) return;
+
   if (type === 'signup') {
     auth.createUserWithEmailAndPassword(email, pass).catch(err => {
-      if(errorEl) { errorEl.textContent = "Error: " + err.message; errorEl.style.display = 'block'; }
+      if(errorEl) errorEl.textContent = "Error: " + err.message;
     });
   } else {
     auth.signInWithEmailAndPassword(email, pass).catch(err => {
-      if(errorEl) { errorEl.textContent = "Correo o contraseÃ±a incorrectos."; errorEl.style.display = 'block'; }
+      if(errorEl) errorEl.textContent = "Correo o clave incorrectos.";
     });
   }
 }
 
 function logout() {
-  auth.signOut().then(() => { location.reload(); });
+  if (typeof auth !== 'undefined') auth.signOut().then(() => { localStorage.clear(); location.reload(); });
 }
 
-function deleteAccount() {
-  if (confirm("Â¿ESTÃS SEGURO? Esta acciÃ³n es irreversible. Se eliminarÃ¡ todo permanentemente.")) {
-    const user = auth.currentUser;
-    if (user) {
-      db.collection("users").doc(user.uid).delete().then(() => {
-        user.delete().then(() => {
-          alert("Cuenta eliminada.");
-          localStorage.clear();
-          location.reload();
-        });
-      }).catch(() => {
-        alert("Debes re-autenticarte antes de eliminar la cuenta por seguridad.");
-      });
-    }
-  }
-}
-
-// 4. NAVEGACIÃ“N Y ONBOARDING
+// 5. NAVEGACIÃ“N Y CUESTIONARIO
 function startOnboarding() {
   document.getElementById('legalModal').style.display = 'flex';
 }
@@ -141,9 +137,7 @@ function nextStep(step) {
 
   const progress = (step / 6) * 100;
   const fill = document.getElementById('progressFill');
-  const label = document.getElementById('progressLabel');
   if(fill) fill.style.width = progress + '%';
-  if(label) label.textContent = `Paso ${step} de 6`;
 
   if(step === 6) {
     collectData();
@@ -159,23 +153,17 @@ function selectOption(el, inputId, value) {
   if (input) input.value = value;
 }
 
-function toggleOption(el) {
-  el.classList.toggle('selected');
-}
+function toggleOption(el) { el.classList.toggle('selected'); }
+function toggleFocus(el) { el.classList.toggle('selected'); }
 
-function toggleFocus(el, value) {
-  el.classList.toggle('selected');
-}
-
-// 5. NÃšCLEO DE DATOS Y RENDERIZADO
+// 6. NÃšCLEO DE DATOS Y RENDERIZADO
 function syncUserData() {
   try {
     localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
-    const user = auth.currentUser;
-    if (user && typeof db !== 'undefined') {
-      db.collection('users').doc(user.uid).set(userData, { merge: true });
+    if (typeof auth !== 'undefined' && auth.currentUser && typeof db !== 'undefined') {
+      db.collection('users').doc(auth.currentUser.uid).set(userData, { merge: true });
     }
-  } catch (e) { console.error("Sync Error:", e); }
+  } catch (e) { console.error("Error de sincronizaciÃ³n"); }
 }
 
 function collectData() {
@@ -205,36 +193,38 @@ function collectData() {
       ingreso: parseInt(document.getElementById('ingreso')?.value) || 0,
       presupuesto: parseInt(document.getElementById('presupuesto')?.value) || 0,
       actividad: document.getElementById('actividad')?.value || 'sedentario',
-      tiempoEjercicio: document.getElementById('tiempoEjercicio')?.value || '30',
-      alergias: document.getElementById('alergias')?.value || 'Ninguna',
-      fuma: document.getElementById('fuma')?.value || 'no',
-      alcohol: document.getElementById('alcohol')?.value || 'no',
-      sueno: document.getElementById('sueno')?.value || 'bueno',
-      estres: document.getElementById('estres')?.value || 'bajo',
-      digestion: document.getElementById('digestion')?.value || 'normal'
+      tiempoEjercicio: document.getElementById('tiempoEjercicio')?.value || '30'
     };
     syncUserData();
-  } catch (e) { console.error("Collect Error:", e); }
+  } catch (e) { console.error("Error al recolectar datos"); }
 }
 
 function renderSummary() {
   try {
     const sum = document.getElementById('summaryCard');
     if (!sum) return;
+    
     const obsStr = (userData.objetivos || []).map(o => o.replace('_', ' ')).join(', ');
-    const years = "a\u00f1os"; const menuTxt = "men\u00fa"; sum.innerHTML = `
+    const n = userData.nombre || 'Usuario';
+    
+    // Usamos cÃ³digos Unicode para evitar problemas de servidor
+    const txtAnos = "a\u00f1os";
+    const txtMenu = "men\u00fa";
+    const iconPin = "\uD83D\uDCCC";
+
+    sum.innerHTML = `
       <div style="text-align: left; animation: fadeIn 0.5s ease-out; color: white;">
-        <p><strong>Hola ${userData.nombre}</strong></p>
-        <p>Hemos analizado tu perfil (${userData.edad} aÃ±os, ${userData.peso}kg) y hemos adaptado tu ruta considerando tus requerimientos para <strong>${obsStr}</strong>.</p>
-        <p style="margin-top:10px;">Tu menÃº se ha optimizado para un presupuesto de $${userData.presupuesto} y tus rutinas para ${userData.tiempoEjercicio} minutos diarios.</p>
+        <p><strong>Hola ${n}</strong></p>
+        <p>Perfil analizado: ${userData.edad} ${txtAnos}, ${userData.peso}kg. Objetivo: <strong>${obsStr}</strong>.</p>
+        <p style="margin-top:10px;">Tu ${txtMenu} se ha optimizado para un presupuesto de $${userData.presupuesto} y rutinas de ${userData.tiempoEjercicio} min.</p>
         <div style="margin-top: 15px; padding: 15px; background: rgba(0, 243, 255, 0.1); border-radius: 8px; border-left: 4px solid var(--primary);">
           <p style="margin: 0; font-size: 14px; line-height: 1.4;">
-            ðŸ“Œ <strong>Dato clave:</strong> Al entrar, ve directamente al <strong>panel lateral</strong> para ver tus <strong>instrucciones para vivir 100 aÃ±os</strong>.
+            ${iconPin} <strong>Dato clave:</strong> Ve al <strong>panel lateral</strong> para ver tus instrucciones para vivir 100 ${txtAnos}.
           </p>
         </div>
       </div>
     `;
-  } catch (e) { console.error("Render Error:", e); }
+  } catch (e) { console.error("Error al renderizar resumen"); }
 }
 
 function generatePlan(isNew = false) {
@@ -253,8 +243,6 @@ function generatePlan(isNew = false) {
   if (isNew) openWelcomeModal();
   syncWithBackend();
 }
-
-async function syncWithBackend() {
   if (!userData || !userData.peso) return;
   
   console.info("ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ¢â‚¬â„¢ Intentando certificar datos con el servidor...");
