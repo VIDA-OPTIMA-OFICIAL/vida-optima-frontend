@@ -1032,3 +1032,5 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+function startOnboarding() { document.getElementById('legalModal').style.display = 'flex'; }
+function acceptLegal() { document.getElementById('legalModal').style.display = 'none'; document.getElementById('landing').style.display = 'none'; document.getElementById('onboarding').classList.remove('hidden'); }
