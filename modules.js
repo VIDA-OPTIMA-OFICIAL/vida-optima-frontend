@@ -142,6 +142,14 @@ const Modules = {
               </p>
             </div>
 
+            <!-- GANCHO DE NEGOCIO: Sincronización Biológica -->
+            <div class="alert-box" style="background: rgba(var(--primary-rgb), 0.05); border: 1px dashed var(--primary); margin-top: 30px; padding: 20px;">
+              <h4 style="color: var(--primary); font-size: 15px; margin-bottom: 8px; display:flex; align-items:center; gap:8px;">🧬 Sincronización Biológica Activa</h4>
+              <p style="font-size: 13px; color: var(--text2); line-height: 1.5; margin:0;">
+                Tu plan se adapta a ti en tiempo real. Mantener tus datos actualizados cada lunes garantiza que el algoritmo de <strong>Vida Óptima</strong> recalibre tus porciones y rutinas con precisión milimétrica. No te conformes con resultados lentos; mantén tu perfil sincronizado.
+              </p>
+            </div>
+
             <!-- Sección de Membresía Regional (PPP) -->
             <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 25px;">
               <h3 style="font-size: 16px; margin-bottom: 15px;">💎 Membresía Vida Óptima Premium</h3>
@@ -200,6 +208,18 @@ const Modules = {
         </div>
 
         ${alertsHtml}
+
+        <!-- GANCHO DE NEGOCIO: Recalibración Semanal -->
+        <div class="alert-box info" style="margin-bottom: 25px; background: linear-gradient(90deg, rgba(var(--primary-rgb), 0.1) 0%, rgba(0,0,0,0) 100%); border-left: 4px solid var(--primary); padding: 20px; position:relative; overflow:hidden;">
+          <div style="position:absolute; right:-10px; top:-10px; font-size:60px; opacity:0.05; transform: rotate(15deg);">⚖️</div>
+          <h4 style="color: var(--primary); margin-bottom: 8px; display:flex; align-items:center; gap:8px;">
+            🚀 Optimización de Resultados en Marcha
+          </h4>
+          <p style="font-size: 14px; color: var(--text); line-height: 1.5; margin:0; max-width: 85%;">
+            Tu cuerpo cambia cada 7 días. Para que tu <strong>química nutricional</strong> siga siendo 100% precisa y no pierdas ni un gramo de progreso, recuerda <strong>actualizar tu peso y presupuesto cada lunes</strong> en tu perfil. 
+            <br><span style="color: var(--primary); font-weight: 700; cursor:pointer;" onclick="showModule('perfil')">Actualizar mi biometría ahora →</span>
+          </p>
+        </div>
 
         <div class="toggle-row" style="margin-bottom: 25px;">
           <button class="toggle-btn ${window.menuWeekOffset === 0 ? 'active' : ''}" onclick="window.menuWeekOffset=0; showModule('menu')">ESTA SEMANA</button>
