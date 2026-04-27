@@ -214,9 +214,10 @@ const Modules = {
             const dateStr = date.toISOString().split('T')[0];
             
             const meals = [
-              { id: 'desayuno', name: 'Desayuno', content: menu[key][0] },
-              { id: 'almuerzo', name: 'Almuerzo', content: menu[key][1] },
-              { id: 'cena', name: 'Cena', content: menu[key][2] }
+              { id: 'desayuno', name: 'Desayuno', content: menu[key][0], icon: '🍳' },
+              { id: 'almuerzo', name: 'Almuerzo', content: menu[key][1], icon: '🍗' },
+              { id: 'merienda', name: 'Merienda', content: menu[key][2], icon: '🍎' },
+              { id: 'cena', name: 'Cena', content: menu[key][3], icon: '🌙' }
             ];
 
             return `
@@ -233,12 +234,12 @@ const Modules = {
                   const isDone = u.historial && u.historial[keyId] === true;
 
                   return `
-                    <div class="meal-item" style="margin-bottom: 12px; position:relative; padding-left: 30px;">
-                      <div class="task-check ${isDone ? 'checked' : ''}" onclick="toggleTaskStatus('${dateStr}', '${m.id}', this)" style="position:absolute; left:0; top:2px;">${isDone ? '✓' : '○'}</div>
-                      <div style="font-size: 10px; color: var(--text3); text-transform: uppercase;">${m.name}</div>
-                      <div style="font-size: 14px; color: var(--text); line-height: 1.4; cursor:pointer;" onclick="openMealModal('${displayContent}')">
+                    <div class="meal-item" style="margin-bottom: 15px; position:relative; padding-left: 35px;">
+                      <div class="task-check ${isDone ? 'checked' : ''}" onclick="toggleTaskStatus('${dateStr}', '${m.id}', this)" style="position:absolute; left:0; top:4px;">${isDone ? '✓' : '○'}</div>
+                      <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">${m.icon} ${m.name}</div>
+                      <div style="font-size: 15px; color: var(--text); line-height: 1.5; cursor:pointer; font-weight: 500;" onclick="openMealModal('${displayContent}')">
                         ${displayContent}
-                        ${sub ? `<br><span style="font-size: 11px; color: var(--yellow);">🔄 Sustitución: ${sub.razon}</span>` : ''}
+                        ${sub ? `<br><span style="font-size: 12px; color: var(--yellow); font-weight: 400;">🔄 Sustitución: ${sub.razon}</span>` : ''}
                       </div>
                     </div>
                   `;

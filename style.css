@@ -723,56 +723,63 @@ select option { background: var(--surface2); }
 
 /* ─── PRINT STYLES (PDF DOWNLOAD) ─── */
 @media print {
+  @page { margin: 1cm; size: auto; }
   body {
-    background: #fff;
-    color: #000;
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
   }
-  .dash-sidebar, .mobile-header, .toggle-row, .alert-box, .btn-primary, .btn-secondary, button {
+  .dash-sidebar, .mobile-header, .toggle-row, .alert-box, .btn-primary, .btn-restart, .module-badge, button, .scroll-indicator, .task-check {
     display: none !important;
   }
   .dash-content {
-    margin-left: 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
+    width: 100% !important;
   }
-  .module-header h1 {
-    color: #000;
+  .module {
+    background: #fff !important;
+    box-shadow: none !important;
   }
-  .module .desc {
-    color: #333;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-  }
-  .day-col {
-    border: 1px solid #ccc;
-    break-inside: avoid;
-    background: #fff;
-  }
-  .day-header {
-    background: #f0f0f0;
-    color: #000;
-    border-bottom: 1px solid #ccc;
-  }
-  .day-meal {
-    border-bottom: 1px solid #ccc;
-  }
-  .meal-type {
-    color: #555;
-  }
-  .meal-name {
-    color: #000;
+  .module h1 {
+    font-size: 24pt !important;
+    color: #000 !important;
+    margin-bottom: 20px !important;
+    text-align: center;
   }
   .week-grid {
-    grid-template-columns: repeat(7, 1fr) !important;
-    display: flex;
-    flex-wrap: wrap;
+    display: block !important; /* Stack days vertically in PDF for legibility */
   }
-  .task-check {
-    display: none !important;
+  .day-col {
+    width: 100% !important;
+    margin-bottom: 30px !important;
+    border: 2px solid #eee !important;
+    border-radius: 10px !important;
+    page-break-inside: avoid;
+    background: #fff !important;
   }
-  .badge-green {
-    color: #000;
-    border: 1px solid #000;
-    background: transparent;
+  .day-header {
+    background: #f8f8f8 !important;
+    color: #000 !important;
+    font-size: 16pt !important;
+    padding: 15px !important;
+    border-bottom: 2px solid #eee !important;
+    text-align: left !important;
+  }
+  .day-meal {
+    padding: 15px 20px !important;
+    border-bottom: 1px solid #eee !important;
+  }
+  .meal-type {
+    color: #666 !important;
+    font-size: 9pt !important;
+    text-transform: uppercase;
+    margin-bottom: 5px !important;
+    display: block;
+  }
+  .meal-name {
+    color: #000 !important;
+    font-size: 13pt !important;
+    font-weight: 600 !important;
   }
 }
