@@ -555,105 +555,99 @@ const Modules = {
     return html;
   },
 
-  // ── 4. Ejercicio ──────────────────────────
   renderEjercicio(u) {
     const exType = window.currentExerciseType || 'casa';
-
-    // Detect age/condition-appropriate plan first
     const planEspecial = Engine.detectarPlanEjercicio(u);
     const catKey = planEspecial || (Engine.ejercicios[u.objetivo] ? u.objetivo : 'mantenimiento');
     const plan = Engine.ejercicios[catKey];
-    const rutinas = plan[exType] || plan['casa']; // fallback to casa if type not available
+    const rutinasBase = plan[exType] || plan['casa'];
 
-    const edad = parseInt(u.edad) || 25;
-    const esNino = edad <= 12;
-    const esAdolescente = edad >= 13 && edad <= 17;
-    const esMayor = edad >= 60;
+    const dayNames = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+    
+    // Banner de Actualización Semanal
+    const updateBanner = `
+      <div class="alert-box info" style="margin-bottom: 25px; border: 1px solid var(--primary); background: rgba(var(--primary-rgb), 0.05); display: flex; align-items: center; gap: 15px;">
+        <div style="font-size: 24px;">📅</div>
+        <div>
+          <h4 style="margin:0; color: var(--primary);">Recalibración Semanal Obligatoria</h4>
+          <p style="margin: 5px 0 0; font-size: 13px;">Para garantizar que tu nutrición y entrenamiento sigan siendo precisos, <strong>actualiza tu peso, estatura y presupuesto cada lunes</strong> en la pestaña "Mi Perfil".</p>
+        </div>
+      </div>
+    `;
 
-    // Build context banner based on who this is
-    let contextBanner = '';
-    if (esNino) {
-      contextBanner = `<div class="alert-box success" style="margin-bottom:20px;">
-        <h4>🌟 ¡Hola ${u.nombre}! Esta rutina es especial para ti</h4>
-        <p>Tienes <strong>${edad} años</strong> y eso es increíble. Tu cuerpo está creciendo y estos ejercicios están diseñados para que seas más fuerte, más rápido y más sano. ¡Lo más importante es que te diviertas!</p>
-      </div>`;
-    } else if (esAdolescente) {
-      contextBanner = `<div class="alert-box success" style="margin-bottom:20px;">
-        <h4>🔥 Rutina Adaptada para tus ${edad} años</h4>
-        <p>En esta etapa tu cuerpo tiene un potencial enorme. Estas rutinas desarrollan tu fuerza y resistencia de forma segura, sin comprometer el crecimiento de tus huesos y articulaciones.</p>
-      </div>`;
-    } else if (planEspecial === 'adulto_mayor_fragil') {
-      contextBanner = `<div class="alert-box warning" style="margin-bottom:20px;">
-        <h4>🫶 Rutina Terapéutica Personalizada</h4>
-        <p>Basándonos en tu edad (<strong>${edad} años</strong>) y tu condición de salud actual, hemos seleccionado ejercicios de <strong>bajo impacto y alta seguridad</strong>. Siempre consulta a tu médico antes de comenzar cualquier programa nuevo.</p>
-      </div>`;
-    } else if (esMayor) {
-      contextBanner = `<div class="alert-box success" style="margin-bottom:20px;">
-        <h4>🌿 Rutina de Longevidad para ${edad} años</h4>
-        <p>Estos ejercicios están diseñados para mantener tu independencia, prevenir caídas y conservar la salud cardiovascular. La constancia es más importante que la intensidad.</p>
-      </div>`;
-    } else if (planEspecial === 'sobrepeso_condicion') {
-      contextBanner = `<div class="alert-box warning" style="margin-bottom:20px;">
-        <h4>💚 Rutina de Inicio Inteligente</h4>
-        <p>Hemos adaptado tu plan considerando tu condición actual. Empezamos suave para construir el hábito sin lesiones. A medida que tu cuerpo se fortalezca, la intensidad irá aumentando gradualmente.</p>
-      </div>`;
+    // Bloque Educativo / Legal
+    const educationBlock = `
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+        <h3 style="font-size: 16px; color: var(--primary); margin-bottom: 10px;">🧪 El Propósito Biológico de tu Rutina</h3>
+        <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 15px;">
+          Estas rutinas no son solo esfuerzo físico; son el <strong>catalizador metabólico</strong>. Los nutrientes que te proporcionamos en tu menú necesitan una señal biológica para depositarse donde deben (músculos, huesos) y no como reserva de grasa. El ejercicio es la "llave" que abre tus células para que la química de tu alimentación funcione correctamente hacia tu meta de <strong>${u.objetivo.replace('_',' ')}</strong>.
+        </p>
+        <div style="font-size: 12px; color: var(--text3); border-top: 1px solid var(--border); padding-top: 15px; font-style: italic;">
+          ⚠️ <strong>Nota de Seguridad:</strong> Este plan es una guía inteligente basada en tu perfil. Sin embargo, para resultados máximos y prevención de lesiones, recomendamos encarecidamente la supervisión de un profesional del ejercicio físico. Si sientes dolor agudo o mareos, detente de inmediato.
+        </div>
+      </div>
+    `;
+
+    // Lógica de racha (Sugerencia de escalado)
+    let scalingSuggestion = '';
+    if (u.streak >= 90) {
+      scalingSuggestion = `
+        <div class="alert-box success" style="margin-bottom: 20px; border-color: var(--yellow);">
+          <h4>🚀 ¡Felicidades por tus 3 meses de racha!</h4>
+          <p>Has alcanzado una madurez metabólica importante. Es momento de <strong>aumentar la intensidad</strong>. Si entrenas en casa, considera añadir peso (mochila) o pasar a la pestaña de "Gimnasio" para desafiar tus fibras musculares.</p>
+        </div>
+      `;
     }
-
-    const btnCasaClass = exType === 'casa' ? 'active' : '';
-    const btnGymClass = exType === 'gym' ? 'active' : '';
-    const btnFuncClass = exType === 'funcional' ? 'active' : '';
-
-    // For children, hide the gym button and show a note
-    const gymBtn = esNino
-      ? `<button class="toggle-btn" onclick="showModule('ejercicio')" style="opacity:0.4;cursor:not-allowed;" title="No recomendado para menores de 13 años">🏋️ Gimnasio ⚠️</button>`
-      : `<button class="toggle-btn ${btnGymClass}" onclick="toggleExerciseType('gym')">🏋️ Gimnasio</button>`;
 
     return `
       <div class="module">
         <div class="module-header">
-          <span class="module-badge badge-red">Entrenador Experto</span>
-          <h1>Protocolo de Entrenamiento</h1>
-          <p class="desc">Diseñado específicamente para ${esNino ? 'tu edad y etapa de desarrollo' : esMayor ? 'longevidad y bienestar a tu edad' : 'tu objetivo de ' + (u.objetivo || (u.objetivos ? u.objetivos[0] : 'mantenimiento')).replace('_',' ')}.</p>
+          <span class="module-badge badge-yellow">Activación Metabólica</span>
+          <h1>Tu Plan de Entrenamiento Semanal</h1>
+          <p class="desc">Programación de 7 días sincronizada con tu química nutricional.</p>
         </div>
 
-        ${contextBanner}
+        ${updateBanner}
+        ${scalingSuggestion}
+        ${educationBlock}
 
-        <div class="alert-box success" style="margin-bottom: 24px;">
+        <div class="alert-box success" style="margin-bottom: 24px; font-size: 14px;">
           ${plan.trainer}
         </div>
 
-        <div class="toggle-row" style="margin-bottom: 24px;">
-          <button class="toggle-btn ${btnCasaClass}" onclick="toggleExerciseType('casa')">🏠 Casa (Calistenia)</button>
-          ${gymBtn}
-          <button class="toggle-btn ${btnFuncClass}" onclick="toggleExerciseType('funcional')">🔥 ${esNino ? 'Juegos Activos' : esMayor ? 'Actividad Suave' : 'Funcional / Cardio'}</button>
+        <div class="toggle-row" style="margin-bottom: 25px;">
+          <button class="toggle-btn ${exType === 'casa' ? 'active' : ''}" onclick="window.currentExerciseType='casa'; showModule('ejercicio')">🏠 EN CASA</button>
+          <button class="toggle-btn ${exType === 'gym' ? 'active' : ''}" onclick="window.currentExerciseType='gym'; showModule('ejercicio')">🏋️ GIMNASIO</button>
+          <button class="toggle-btn ${exType === 'funcional' ? 'active' : ''}" onclick="window.currentExerciseType='funcional'; showModule('ejercicio')">🔥 FUNCIONAL</button>
         </div>
 
-        <div class="rutinas-container">
-          ${rutinas.map((r, i) => {
-            const taskId = `ejercicio_${exType}_${i}`;
-            const state = (u.historial && u.historial[taskId] !== undefined) ? u.historial[taskId] : undefined;
-            let btnClass = 'task-check';
-            let btnText = '○';
-            if (state === true) { btnClass += ' checked'; btnText = '✓'; }
-            if (state === false) { btnClass += ' failed'; btnText = '✗'; }
-
+        <div class="week-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          ${dayNames.map((day, idx) => {
+            const r = rutinasBase[idx] || { 
+              dia: day, 
+              calentamiento: 'Movilidad articular suave (3 min).', 
+              rutina: ['<strong>Descanso Activo:</strong> Hoy tu cuerpo se recupera. Camina 20 min o simplemente descansa para asimilar el trabajo de la semana.'] 
+            };
+            
             return `
-            <div class="card" style="margin-bottom: 16px; position:relative;">
-              <button class="${btnClass}" onclick="event.stopPropagation(); toggleTaskStatus('ejercicio', '${exType}_${i}', this)" title="Marcar rutina">${btnText}</button>
-              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; padding-right: 35px;">
-                <div class="card-icon" style="font-size:16px; margin:0; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.05);">${r.dia.includes('Descanso') ? '🧘' : '⚡'}</div>
-                <h3 style="margin:0; font-size:16px;">${r.dia}</h3>
-              </div>
-              <p style="font-size:13px; color:var(--text2); margin-bottom:12px;"><strong>Calentamiento:</strong> ${r.calentamiento}</p>
-              
-              <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
-                <h4 style="margin-top:0; margin-bottom:8px; font-size:13px; color:var(--text);">Rutina / Tarea del Día</h4>
-                <ul style="margin:0; padding-left:20px; font-size:14px; color:var(--text); line-height:1.6;">
-                  ${r.rutina.map(item => `<li style="margin-bottom:6px;">${item}</li>`).join('')}
+              <div class="day-col" style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px; border: 1px solid var(--border);">
+                <div style="font-weight: 800; color: var(--primary); margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; font-size: 16px;">
+                  ${day.toUpperCase()}
+                </div>
+                <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; margin-bottom: 5px;">🔥 Calentamiento</div>
+                <p style="font-size: 13px; color: var(--text2); margin-bottom: 15px;">${r.calentamiento}</p>
+                
+                <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; margin-bottom: 8px;">💪 Tarea del Día</div>
+                <ul style="list-style: none; padding:0;">
+                  ${r.rutina.map(step => `
+                    <li style="font-size: 14px; color: var(--text); margin-bottom: 12px; line-height: 1.5; padding-left: 20px; position:relative;">
+                      <span style="position:absolute; left:0; color: var(--primary);">•</span> ${step}
+                    </li>
+                  `).join('')}
                 </ul>
               </div>
-            </div>
-          `}).join('')}
+            `;
+          }).join('')}
         </div>
       </div>
     `;
