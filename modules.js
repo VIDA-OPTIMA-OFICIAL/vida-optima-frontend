@@ -18,6 +18,36 @@
 // ═══════════════════════════════════════════
 
 const Modules = {
+
+  renderAuth() {
+    return `
+      <div class="module" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center;">
+        <div style="margin-bottom: 30px;">
+          <img src="icon.png" style="width: 80px; height: 80px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,243,255,0.2);">
+          <h1 style="font-size: 28px; margin-top: 15px;">Bienvenido a <span style="color: var(--primary);">Vida Óptima</span></h1>
+          <p style="color: var(--text2);">Inicia sesión para sincronizar tu progreso biológico en la nube.</p>
+        </div>
+
+        <div class="card" style="width: 100%; max-width: 400px; padding: 30px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 20px;">
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label style="display: block; text-align: left; margin-bottom: 8px; font-size: 11px; color: var(--text3); letter-spacing: 1px;">CORREO ELECTRÓNICO</label>
+            <input type="email" id="auth-email" placeholder="tu@email.com" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px;">
+          </div>
+          <div class="form-group" style="margin-bottom: 25px;">
+            <label style="display: block; text-align: left; margin-bottom: 8px; font-size: 11px; color: var(--text3); letter-spacing: 1px;">CONTRASEÑA</label>
+            <input type="password" id="auth-pass" placeholder="••••••••" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px;">
+          </div>
+          
+          <button class="btn-primary" style="width: 100%; margin-bottom: 15px; padding: 15px;" onclick="handleAuth('login')">ENTRAR AL SISTEMA</button>
+          <button class="btn-secondary" style="width: 100%; padding: 12px; border: 1px solid var(--border); background: transparent; color: var(--text2);" onclick="handleAuth('signup')">CREAR NUEVA CUENTA</button>
+          
+          <div id="auth-error" style="color: var(--red); font-size: 13px; margin-top: 15px; display: none; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 5px;"></div>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 12px; color: var(--text3);">🔒 Datos cifrados con Google Cloud Security.</p>
+      </div>
+    `;
+  },
   
   // ── 1. Perfil ─────────────────────────────
   renderPerfil(u) {
@@ -162,6 +192,12 @@ const Modules = {
                 <button class="btn-primary" style="background: var(--text); color: var(--bg); font-size: 12px; padding: 10px 15px;" onclick="openCryptoPayment()">Activar Premium →</button>
               </div>
             </div>
+          </div>
+          <!-- Botón Cerrar Sesión -->
+          <div style="margin-top: 40px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px;">
+            <button style="font-size: 11px; opacity: 0.5; border: none; background: transparent; color: var(--text3); cursor: pointer;" onclick="logout()">
+              🚪 CERRAR SESIÓN SEGURA
+            </button>
           </div>
         </div>
       </div>

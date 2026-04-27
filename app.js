@@ -32,7 +32,60 @@ let userData = {
 };
 
 // Configuración del Backend
-const BACKEND_URL = "https://vida-optima-backend-production.up.railway.app"; // Reemplazar con la URL real
+const BACKEND_URL = "https://vida-optima-backend-production.up.railway.app"; 
+
+// ── Firebase Auth Observer ────────────────
+auth.onAuthStateChanged(user => {
+  if (user) {
+    console.log("👤 Usuario logueado:", user.email);
+    // Cargar datos desde Firestore
+    db.collection("users").doc(user.uid).get().then(doc => {
+      if (doc.exists) {
+        userData = { ...userData, ...doc.data() };
+        console.log("📦 Datos sincronizados desde la nube");
+        // Si estamos en login, ir al dashboard
+        if (window.currentModule === 'auth') showModule('perfil');
+      } else {
+        console.log("🆕 Usuario nuevo, creando registro...");
+        db.collection("users").doc(user.uid).set(userData);
+      }
+    });
+  } else {
+    console.log("🚫 Usuario no logueado");
+  }
+});
+
+function handleAuth(type) {
+  const email = document.getElementById('auth-email').value;
+  const pass = document.getElementById('auth-pass').value;
+  const errorEl = document.getElementById('auth-error');
+
+  if (!email || !pass) {
+    errorEl.textContent = "Por favor completa todos los campos.";
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  if (type === 'signup') {
+    auth.createUserWithEmailAndPassword(email, pass)
+      .catch(err => {
+        errorEl.textContent = "Error: " + err.message;
+        errorEl.style.display = 'block';
+      });
+  } else {
+    auth.signInWithEmailAndPassword(email, pass)
+      .catch(err => {
+        errorEl.textContent = "Correo o contraseña incorrectos.";
+        errorEl.style.display = 'block';
+      });
+  }
+}
+
+function logout() {
+  auth.signOut().then(() => {
+    location.reload(); // Reiniciar para limpiar estado
+  });
+}
 
 // ── Navegación Onboarding y Legal ──────────
 function startOnboarding() {
@@ -89,6 +142,23 @@ function updateEnfoques() {
   // Extra para futuro
 }
 
+// ── Sincronización Maestra (Local + Nube) ──
+function syncUserData() {
+  // Guardar Local
+  syncUserData();
+  
+  // Guardar en Nube (Firebase)
+  const user = auth.currentUser;
+  if (user) {
+    db.collection("users").doc(user.uid).set(userData, { merge: true })
+      .then(() => {
+        console.log("☁️ Sincronización en la nube exitosa");
+        userData.isSynced = true;
+      })
+      .catch(e => console.error("❌ Error al sincronizar con Firestore:", e));
+  }
+}
+
 // ── Recolección de Datos ──────────────────
 function collectData() {
   const enfoques = [];
@@ -141,7 +211,7 @@ function collectData() {
     historial: {}
   };
 
-  localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+  syncUserData();
 }
 
 function renderSummary() {
@@ -211,7 +281,7 @@ async function syncWithBackend() {
       userData.isSynced = true;
       window.currentMenuType = result.menuType;
       
-      localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+      syncUserData();
       
       const activeLink = document.querySelector('.dash-link.active');
       if(activeLink && activeLink.getAttribute('onclick')) {
@@ -227,6 +297,15 @@ async function syncWithBackend() {
 }
 
 function showModule(modName) {
+  window.currentModule = modName;
+  
+  // PROTECCIÓN FIREBASE: Si no hay usuario y no es onboarding/auth, forzar login
+  const user = auth.currentUser;
+  if (!user && modName !== 'auth' && modName !== 'onboarding') {
+    modName = 'auth';
+    window.currentModule = 'auth';
+  }
+
   // Rastreo de Analítica
   Analytics.trackEvent('module_view', { module: modName });
 
@@ -256,6 +335,7 @@ function showModule(modName) {
 
   // Render based on module
   switch(modName) {
+    case 'auth': content.innerHTML = Modules.renderAuth(); break;
     case 'perfil': content.innerHTML = Modules.renderPerfil(userData); break;
     case 'progreso': content.innerHTML = Modules.renderProgreso(userData); break;
     case 'menu': content.innerHTML = Modules.renderMenu(userData); break;
@@ -402,7 +482,7 @@ function toggleTaskStatus(dateStr, taskId, btnElement) {
     btnElement.innerHTML = '○';
   }
   
-  localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+  syncUserData();
   
   // Si estamos en la vista de progreso, re-renderizar para actualizar gráficas
   const activeLink = document.querySelector('.dash-link.active');
@@ -487,7 +567,16 @@ function nextRecomendacion(tipo) {
   } else {
     userData.recsIdx[tipo] = 1;
   }
-  localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+  
+  // Guardar en Nube
+  const user = auth.currentUser;
+  if (user) {
+    db.collection("users").doc(user.uid).set(userData, { merge: true })
+      .then(() => console.log("✅ Sincronizado en la nube"))
+      .catch(e => console.error("❌ Error sinc:", e));
+  }
+
+  syncUserData();
   showModule('recomendaciones');
 }
 
@@ -662,7 +751,7 @@ function simulatePaymentSuccess(planType) {
       userData.totalVideosWatched = 0; // Se reinicia el ciclo de la beca
     }
 
-    localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+    syncUserData();
     location.reload();
   }, 2000);
 }
@@ -675,7 +764,7 @@ function payWithCoins() {
     userData.coins -= cost;
     userData.isPremium = true;
     Analytics.trackEvent('payment_success', { method: 'optimal_coins', amount: cost });
-    localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+    syncUserData();
     alert("🎉 ¡Beca activada! Ya eres usuario Premium.");
     location.reload();
   } else {
@@ -718,7 +807,7 @@ function watchVideo() {
       userData.discountUnlocked = true;
     }
 
-    localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+    syncUserData();
     
     alert(`✅ ¡Video completado! +10 Optimal Coins. (${userData.videosToday}/3 hoy)`);
     
@@ -761,7 +850,7 @@ window.updateProfile = function() {
     userData.actividad = newActividad;
     userData.tiempoEjercicio = newTiempo;
 
-    localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+    syncUserData();
     
     // Reset button
     btn.innerHTML = originalText;
@@ -937,10 +1026,11 @@ function checkDailyStreak() {
   }
   
   userData.lastCheckIn = today;
-  localStorage.setItem('vidaOptima_user', JSON.stringify(userData));
+  syncUserData();
 }
 
 // Ejecutar al cargar
 setTimeout(checkDailyStreak, 2000);
-i f   ( ' s e r v i c e W o r k e r '   i n   n a v i g a t o r )   {   w i n d o w . a d d E v e n t L i s t e n e r ( ' l o a d ' ,   ( )   = >   {   n a v i g a t o r . s e r v i c e W o r k e r . r e g i s t e r ( ' / s w . j s ' ) . t h e n ( r e g   = >   c o n s o l e . l o g ( ' S W   R e g i s t e r e d ' ) ,   e r r   = >   c o n s o l e . l o g ( ' S W   F a i l e d ' ,   e r r ) ) ;   } ) ;   }  
+i f   ( ' s e r v i c e W o r k e r '   i n   n a v i g a t o r )   {   w i n d o w . a d d E v e n t L i s t e n e r ( ' l o a d ' ,   ( )   = >   {   n a v i g a t o r . s e r v i c e W o r k e r . r e g i s t e r ( ' / s w . j s ' ) . t h e n ( r e g   = >   c o n s o l e . l o g ( ' S W   R e g i s t e r e d ' ) ,   e r r   = >   c o n s o l e . l o g ( ' S W   F a i l e d ' ,   e r r ) ) ;   } ) ;   } 
+ 
  
