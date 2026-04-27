@@ -4,169 +4,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vida &Oacute;ptima &mdash; Bioqu&iacute;mica Nutricional y Longevidad</title>
-<meta name="description" content="Vida &Oacute;ptima: Tu asistente inteligente de salud y longevidad. Men&uacute;s personalizados seg&uacute;n tu presupuesto y bioqu&iacute;mica.">
-<meta name="google-site-verification" content="GHcOZleJNn6uwqtNGmeANsBuA-85JAv3RLnpLBjB5m4" />
-<meta name="theme-color" content="#0a0e17">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" href="icon.png">
+<meta name="description" content="Vida &Oacute;ptima: Tu asistente inteligente de salud y longevidad.">
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- MODAL LEGAL -->
 <div id="legalModal" class="modal" style="display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.95); z-index:9999;">
-  <div class="modal-content" style="max-width:500px; padding:30px; border:1px solid var(--border);">
-    <div style="font-size:40px; margin-bottom:20px;">⚖️</div>
-    <h2 style="margin-bottom:15px;">Aviso Legal y Contrato de Uso</h2>
-    <div style="text-align:left; font-size:13px; color:var(--text2); line-height:1.6; max-height:350px; overflow-y:auto; padding-right:10px; margin-bottom:25px; border-bottom: 1px solid var(--border);">
-      <p><strong>1. NATURALEZA DEL SERVICIO:</strong> Vida &Oacute;ptima es una plataforma educativa de bienestar integral.</p>
-      <p><strong>2. JURISDICCI&Oacute;N:</strong> Cualquier disputa se regir&aacute; por arbitraje internacional.</p>
-      <p><strong>3. PRIVACIDAD:</strong> Cumplimos con GDPR y CCPA. Tus datos est&aacute;n seguros en Google Cloud.</p>
-      <p><strong>4. EXONERACI&Oacute;N:</strong> El usuario asume la responsabilidad de su salud preexistente.</p>
+  <div class="modal-content" style="max-width:500px; padding:30px; border:1px solid #333; background:#111; color:#fff;">
+    <h2>Aviso Legal</h2>
+    <div style="font-size:13px; line-height:1.6; margin:20px 0; max-height:300px; overflow-y:auto;">
+      <p>1. Vida &Oacute;ptima es una plataforma educativa.</p>
+      <p>2. Los datos se procesan seg&uacute;n GDPR y CCPA.</p>
     </div>
-    <div style="display:flex; flex-direction:column; gap:10px;">
-      <button class="btn-primary" onclick="acceptLegal()">Acepto los t&eacute;rminos y condiciones</button>
-      <button style="background:none; border:none; color:var(--text3); font-size:12px; cursor:pointer;" onclick="location.reload()">No acepto (Salir)</button>
-    </div>
+    <button class="btn-primary" onclick="acceptLegal()">Acepto los t&eacute;rminos</button>
   </div>
 </div>
 
-<!-- LANDING PAGE -->
 <section id="landing">
-  <div class="landing-bg"></div>
   <nav class="top-nav">
     <div class="logo">VIDA <span>&Oacute;PTIMA</span></div>
-    <div class="nav-credits">Sistema Independiente de Bienestar</div>
   </nav>
   <div class="landing-content">
-    <div class="landing-badge">🌿 El Manual de Instrucci&oacute;n de Vida</div>
+    <div class="landing-badge">&#127807; El Manual de Instrucci&oacute;n de Vida</div>
     <h1>Vive <span class="gradient-text">100 a&ntilde;os</span><br>con prop&oacute;sito.</h1>
     <p class="landing-sub">Un sistema inteligente adaptado a tu cuerpo, tu pa&iacute;s y tu bolsillo.</p>
     <div class="landing-pills">
-      <span>🥗 Men&uacute;</span> <span>💪 Ejercicio</span> <span>🛒 Compras</span> <span>🧠 Mente</span>
+      <span>&#129367; Men&uacute;</span> <span>&#128170; Ejercicio</span> <span>&#128178; Presupuesto</span>
     </div>
-    <button class="btn-primary" onclick="startOnboarding()">Comenzar mi plan gratuito →</button>
+    <button class="btn-primary" onclick="startOnboarding()">Comenzar mi plan gratuito &rarr;</button>
   </div>
 </section>
 
-<!-- ONBOARDING -->
 <section id="onboarding" class="hidden">
   <div class="onboarding-wrap">
     <div class="onboarding-header">
       <div class="logo small">VIDA <span>&Oacute;PTIMA</span></div>
       <div class="progress-wrap">
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-        <span class="progress-label" id="progressLabel">Paso 1 de 6</span>
       </div>
     </div>
 
-    <!-- STEP 1 -->
     <div class="step active" id="step1">
-      <div class="step-icon">👤</div>
       <h2>Cu&eacute;ntanos sobre ti</h2>
       <div class="form-grid">
-        <div class="form-group full"><label>&iquest;C&oacute;mo te llamas?</label><input type="text" id="nombre" /></div>
-        <div class="form-group"><label>Edad</label><input type="number" id="edad" /></div>
-        <div class="form-group"><label>Sexo</label><select id="sexo"><option value="masculino">Masculino</option><option value="femenino">Femenino</option></select></div>
-        <div class="form-group"><label>Peso (kg)</label><input type="number" id="peso" /></div>
-        <div class="form-group"><label>Estatura (cm)</label><input type="number" id="estatura" /></div>
-        <div class="form-group full"><label>Pa&iacute;s / Ciudad</label><input type="text" id="ubicacion" /></div>
+        <div class="form-group full"><label>Nombre</label><input type="text" id="nombre"></div>
+        <div class="form-group"><label>Edad</label><input type="number" id="edad"></div>
+        <div class="form-group"><label>Peso (kg)</label><input type="number" id="peso"></div>
+        <div class="form-group"><label>Estatura (cm)</label><input type="number" id="estatura"></div>
       </div>
-      <button class="btn-next" onclick="nextStep(2)">Continuar →</button>
+      <button class="btn-next" onclick="nextStep(2)">Continuar &rarr;</button>
     </div>
 
-    <!-- STEP 2 -->
     <div class="step" id="step2">
-      <div class="step-icon">🏥</div>
-      <h2>Tu estado de salud</h2>
+      <h2>Salud</h2>
       <div class="form-grid">
         <div class="form-group full">
-          <label>&iquest;Tienes condiciones de salud?</label>
+          <label>Condiciones</label>
           <div class="checkbox-grid">
-            <label class="cb-item"><input type="checkbox" name="enfermedad" value="diabetes"> Diabetes</label>
-            <label class="cb-item"><input type="checkbox" name="enfermedad" value="hipertension"> Hipertensi&oacute;n</label>
-            <label class="cb-item"><input type="checkbox" name="enfermedad" value="ninguna"> Ninguna</label>
+            <label><input type="checkbox" name="enfermedad" value="diabetes"> Diabetes</label>
+            <label><input type="checkbox" name="enfermedad" value="ninguna" checked> Ninguna</label>
           </div>
         </div>
-        <div class="form-group full"><label>Alergias</label><input type="text" id="alergias" /></div>
-        <div class="form-group full"><label>&iquest;Calidad de sue&ntilde;o?</label><select id="sueno"><option value="bueno">Bueno</option><option value="malo">Malo</option></select></div>
-        <div class="form-group full"><label>Estr&eacute;s</label><select id="estres"><option value="bajo">Bajo</option><option value="alto">Alto</option></select></div>
       </div>
-      <div class="btn-row">
-        <button class="btn-back" onclick="nextStep(1)">← Atr&aacute;s</button>
-        <button class="btn-next" onclick="nextStep(3)">Continuar →</button>
-      </div>
+      <button class="btn-next" onclick="nextStep(3)">Continuar &rarr;</button>
     </div>
 
-    <!-- STEP 3 -->
     <div class="step" id="step3">
-      <h2>&iquest;Objetivo principal?</h2>
+      <h2>Objetivo</h2>
       <div class="option-cards">
-        <div class="option-card" data-value="aumentar_masa" onclick="toggleOption(this)">💪 Ganar masa</div>
-        <div class="option-card" data-value="bajar_grasa" onclick="toggleOption(this)">🔥 Bajar grasa</div>
-        <div class="option-card" data-value="longevidad" onclick="toggleOption(this)">⏳ Longevidad</div>
+        <div class="option-card" onclick="selectOption(this,'obj','longevidad')">Longevidad</div>
+        <div class="option-card" onclick="selectOption(this,'obj','masa')">Masa Muscular</div>
       </div>
-      <div class="btn-row">
-        <button class="btn-back" onclick="nextStep(2)">← Atr&aacute;s</button>
-        <button class="btn-next" onclick="nextStep(4)">Continuar →</button>
-      </div>
+      <input type="hidden" id="obj">
+      <button class="btn-next" onclick="nextStep(4)">Continuar &rarr;</button>
     </div>
 
-    <!-- STEP 4 -->
     <div class="step" id="step4">
-      <h2>Enfoques</h2>
-      <div class="focus-grid">
-        <div class="focus-item" onclick="toggleFocus(this)">⚡ Energ&iacute;a</div>
-        <div class="focus-item" onclick="toggleFocus(this)">🧠 Intelecto</div>
-        <div class="focus-item" onclick="toggleFocus(this)">🌱 Longevidad</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-back" onclick="nextStep(3)">← Atr&aacute;s</button>
-        <button class="btn-next" onclick="nextStep(5)">Continuar →</button>
-      </div>
-    </div>
-
-    <!-- STEP 5 -->
-    <div class="step" id="step5">
       <h2>Presupuesto</h2>
       <div class="form-grid">
-        <div class="form-group full"><label>Presupuesto quincenal (USD)</label><input type="number" id="presupuesto" /></div>
-        <div class="form-group full"><label>Actividad f&iacute;sica</label><select id="actividad"><option value="sedentario">Sedentario</option><option value="activo">Activo</option></select></div>
-        <div class="form-group full"><label>Tiempo disponible</label><select id="tiempoEjercicio"><option value="30">30 min</option><option value="60">1 hora</option></select></div>
+        <div class="form-group"><label>Presupuesto (USD)</label><input type="number" id="presupuesto"></div>
       </div>
-      <div class="btn-row">
-        <button class="btn-back" onclick="nextStep(4)">← Atr&aacute;s</button>
-        <button class="btn-next" onclick="nextStep(6)">Continuar →</button>
-      </div>
+      <button class="btn-next" onclick="nextStep(6)">Finalizar &rarr;</button>
     </div>
 
-    <!-- STEP 6 -->
     <div class="step" id="step6">
-      <div class="step-icon">🚀</div>
-      <h2>¡Tu plan est&aacute; listo!</h2>
-      <div class="summary-card" id="summaryCard"></div>
-      <button class="btn-primary big" onclick="generatePlan(true)">Ver mi Plan Completo →</button>
+      <h2>¡Listo!</h2>
+      <div id="summaryCard" class="summary-card"></div>
+      <button class="btn-primary" onclick="generatePlan(true)">Ver mi Plan</button>
     </div>
   </div>
 </section>
 
-<!-- DASHBOARD -->
 <section id="dashboard" class="hidden">
-  <div class="dash-sidebar" id="dashSidebar">
+  <div class="dash-sidebar">
     <div class="logo small">VIDA <span>&Oacute;PTIMA</span></div>
-    <div class="dash-user" id="dashUser"></div>
+    <div id="dashUser"></div>
     <nav class="dash-nav">
-      <a href="#" class="dash-link active" onclick="showModule('perfil')">👤 Perfil</a>
-      <a href="#" class="dash-link" onclick="showModule('menu')">🥗 Men&uacute;</a>
-      <a href="#" class="dash-link" onclick="showModule('ejercicio')">💪 Ejercicio</a>
+      <a href="#" onclick="showModule('perfil')">Perfil</a>
+      <a href="#" onclick="showModule('menu')">Men&uacute;</a>
     </nav>
-    <button class="btn-restart" onclick="restartApp()">↺ Reiniciar</button>
   </div>
   <div class="dash-content" id="dashContent"></div>
 </section>
 
-<!-- SCRIPTS -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
