@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vida-optima-v1';
+﻿const CACHE_NAME = 'vida-optima-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -26,3 +26,4 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+

@@ -637,7 +637,8 @@ const Modules = {
   renderEjercicio(u) {
     const exType = window.currentExerciseType || 'casa';
     const planEspecial = Engine.detectarPlanEjercicio(u);
-    const catKey = planEspecial || (Engine.ejercicios[u.objetivo] ? u.objetivo : 'mantenimiento');
+    const obj0 = (u.objetivos && u.objetivos[0]) || u.objetivo || 'mantenimiento';
+    const catKey = planEspecial || (Engine.ejercicios[obj0] ? obj0 : 'mantenimiento');
     const plan = Engine.ejercicios[catKey];
     const rutinasBase = plan[exType] || plan['casa'];
 
@@ -659,7 +660,7 @@ const Modules = {
       <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
         <h3 style="font-size: 16px; color: var(--primary); margin-bottom: 10px;">🧪 El Propósito Biológico de tu Rutina</h3>
         <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 15px;">
-          Estas rutinas no son solo esfuerzo físico; son el <strong>catalizador metabólico</strong>. Los nutrientes que te proporcionamos en tu menú necesitan una señal biológica para depositarse donde deben (músculos, huesos) y no como reserva de grasa. El ejercicio es la "llave" que abre tus células para que la química de tu alimentación funcione correctamente hacia tu meta de <strong>${u.objetivo.replace('_',' ')}</strong>.
+          Estas rutinas no son solo esfuerzo físico; son el <strong>catalizador metabólico</strong>. Los nutrientes que te proporcionamos en tu menú necesitan una señal biológica para depositarse donde deben (músculos, huesos) y no como reserva de grasa. El ejercicio es la "llave" que abre tus células para que la química de tu alimentación funcione correctamente hacia tu meta de <strong>${obj0.replace('_',' ')}</strong>.
         </p>
         <div style="font-size: 12px; color: var(--text3); border-top: 1px solid var(--border); padding-top: 15px; font-style: italic;">
           ⚠️ <strong>Nota de Seguridad:</strong> Este plan es una guía inteligente basada en tu perfil. Sin embargo, para resultados máximos y prevención de lesiones, recomendamos encarecidamente la supervisión de un profesional del ejercicio físico. Si sientes dolor agudo o mareos, detente de inmediato.
